@@ -1,0 +1,4 @@
+./jellyfin
+nginx.conf
+nginx.dev.conf
+server/.env
