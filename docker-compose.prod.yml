@@ -12,6 +12,9 @@ services:
       context: ./server
     expose:
       - "8080"
+    volumes:
+      - ./server/src:/server/src
+      - /var/run/docker.sock:/var/run/docker.sock
 
 
   jellyfin:
@@ -24,5 +27,11 @@ services:
       - ./jellyfin/cache:/cache
       - ./jellyfin/media:/media
     restart: unless-stopped
+
+  nextcloud:
+    image: nextcloud
+
+    expose:
+      - "9000"
 
   # more apps can be added later

@@ -1,12 +1,16 @@
-FROM python:3.11
+FROM maven:3.9-eclipse-temurin-25
 
-WORKDIR /app
+WORKDIR /backend
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && \
+    apt-get install -y docker.io && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY . .
+COPY pom.xml .
+RUN mvn dependency:go-offline -q
 
-EXPOSE 8000
+COPY src ./src
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 8080
+
+CMD ["mvn", "spring-boot:run"]
