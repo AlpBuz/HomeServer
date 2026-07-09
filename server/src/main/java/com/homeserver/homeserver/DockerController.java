@@ -1,6 +1,7 @@
-package com.homeserver.homeserver.controller;
-
+package com.homeserver.homeserver;
+import com.homeserver.homeserver.util.DockerService;
 import com.homeserver.homeserver.util.ContainerInfo;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,83 +17,33 @@ import java.util.List;
 @RequestMapping("/docker")
 public class DockerController {
 
-    @GetMapping("/status")
-    public List<ContainerInfo> status() throws IOException, InterruptedException {
-        List<ContainerInfo> containers = new ArrayList<>();
+    private final DockerService dockerService;
 
-        ProcessBuilder pb = new ProcessBuilder(
-                "docker",
-                "ps",
-                "-a",
-                "--format",
-                "{{.ID}}|{{.Names}}|{{.Image}}|{{.State}}|{{.Status}}"
-        );
-
-        Process process = pb.start();
-
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(process.getInputStream())
-        );
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("\\|", 5);
-
-            if (parts.length == 5) {
-                containers.add(new ContainerInfo(
-                        parts[0],
-                        parts[1],
-                        parts[2],
-                        parts[3],
-                        parts[4]
-                ));
-            }
-        }
-
-        process.waitFor();
-
-        return containers;
+    public DockerController(DockerService dockerService) {
+        this.dockerService = dockerService;
     }
 
-    @PostMapping("/{id}/start")
+    @GetMapping("/getContainers")
+    public List<ContainerInfo> status() {
+        return dockerService.getContainers();
+    }
+
+    @PostMapping("/{id}/start") // starts the given container
     public String start(@PathVariable String id) throws Exception {
-
-        ProcessBuilder pb = new ProcessBuilder(
-                "docker",
-                "start",
-                id
-        );
-
-        pb.start().waitFor();
-
-        return "Started " + id;
+        String message = dockerService.performAction(id, "start");
+        return message;
     }
 
-    @PostMapping("/{id}/stop")
+    @PostMapping("/{id}/stop") // stops the given container
     public String stop(@PathVariable String id) throws Exception {
-
-        ProcessBuilder pb = new ProcessBuilder(
-                "docker",
-                "stop",
-                id
-        );
-
-        pb.start().waitFor();
-
-        return "Stopped " + id;
+        String message = dockerService.performAction(id, "stop");
+        return message;
     }
 
-    @PostMapping("/{id}/restart")
+    @PostMapping("/{id}/restart") // restarts the given container
     public String restart(@PathVariable String id) throws Exception {
-        ProcessBuilder pb = new ProcessBuilder(
-                "docker",
-                "restart",
-                id
-        );
-
-        pb.start().waitFor();
-
-        return "Restarted " + id;
+        String message = dockerService.performAction(id, "restart");
+        return message;
     }
 
 }

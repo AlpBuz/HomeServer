@@ -1,6 +1,7 @@
 services:
   nginx:
     image: nginx:alpine
+    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
@@ -10,15 +11,17 @@ services:
   server:
     build:
       context: ./server
+    container_name: server
     expose:
       - "8080"
     volumes:
-      - ./server/src:/server/src
+      - ./server/src:/backend/src
       - /var/run/docker.sock:/var/run/docker.sock
 
   frontend:
     build:
       context: ./dashboard/client
+    container_name: hub
     expose:
       - "5173"
 
