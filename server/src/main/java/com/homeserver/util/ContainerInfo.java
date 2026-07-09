@@ -1,4 +1,5 @@
 package com.homeserver.homeserver.util;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ContainerInfo {
 
@@ -21,8 +22,6 @@ public class ContainerInfo {
         this.state = state;
         this.status = status;
     }
-
-    // Getters
 
     public String getId() {
         return id;
@@ -56,8 +55,8 @@ public class ContainerInfo {
         return memoryLimit;
     }
 
-    // Setters
 
+    // Setters
     public void setId(String id) {
         this.id = id;
     }

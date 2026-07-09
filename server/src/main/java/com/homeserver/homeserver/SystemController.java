@@ -25,10 +25,15 @@ Uptime: 5 days
 
 
 @RestController
-@RequestMapping("/system")
+@RequestMapping("/api/system")
 public class SystemController {
-    @GetMapping("")
-    public String status() {
-        return "Home server backend is running";
-    }
+    // @GetMapping("getResources")
+    // public ResourceService getResources() {
+        
+    // }
+
+    // @GetMapping("refreashMetrics")
+    // public ResourceService refreashMetrics(){
+
+    // }
 }

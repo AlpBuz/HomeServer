@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/docker")
+@RequestMapping("/api/docker")
 public class DockerController {
 
     private final DockerService dockerService;

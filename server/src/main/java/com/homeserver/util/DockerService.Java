@@ -21,6 +21,7 @@ public class DockerService {
 
     @PostConstruct
     public void init() {
+        // inital start of the class.
         System.out.println("Loading DockerService class");
         refreshContainers();
     }
