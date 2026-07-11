@@ -57,11 +57,18 @@
             <artifactId>docker-java-core</artifactId>
             <version>3.7.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.docker-java</groupId>
             <artifactId>docker-java-transport-httpclient5</artifactId>
             <version>3.7.1</version>
         </dependency>
+
+		<dependency>
+			<groupId>com.github.oshi</groupId>
+			<artifactId>oshi-core</artifactId>
+			<version>6.4.0</version>
+		</dependency>
         
 	</dependencies>
 

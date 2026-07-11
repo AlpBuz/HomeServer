@@ -1,4 +1,4 @@
-package com.homeserver.homeserver.util;
+package com.homeserver.homeserver.util.docker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ContainerInfo {

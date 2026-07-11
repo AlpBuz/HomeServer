@@ -1,6 +1,6 @@
 package com.homeserver.homeserver;
-import com.homeserver.homeserver.util.DockerService;
-import com.homeserver.homeserver.util.ContainerInfo;
+import com.homeserver.homeserver.util.docker.DockerService;
+import com.homeserver.homeserver.util.docker.ContainerInfo;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
