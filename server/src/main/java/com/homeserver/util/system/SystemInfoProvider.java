@@ -26,6 +26,11 @@ public class SystemInfoProvider {
         );
     }
 
+    public static long formatBytes(long bytes) {
+        long gb = bytes / (1024 * 1024 * 1024);
+        return gb;
+    }
+
     private String getCpuModel() {
         return cpu.getProcessorIdentifier().getName();
     }
@@ -35,7 +40,7 @@ public class SystemInfoProvider {
     }
 
     private long getTotalMemory() {
-        return memory.getTotal();
+        return formatBytes(memory.getTotal());
     }
 
     private String getOsName() {
