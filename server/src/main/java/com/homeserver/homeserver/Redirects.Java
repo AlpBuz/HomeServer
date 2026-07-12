@@ -1,12 +1,13 @@
 package com.homeserver.homeserver.controller;
-import com.homeserver.homeserver.util.DockerService;
-import com.homeserver.homeserver.util.ContainerInfo;
+import com.homeserver.homeserver.util.docker.DockerService;
+import com.homeserver.homeserver.util.docker.ContainerInfo;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.HashMap;
+import java.util.Map;
 /*
 Handles all the redirects that happens to the different applcaiton running on the server
 Since all applications will be inside containers on this home server than we need to check if container exist and it is running
@@ -29,7 +30,7 @@ public class Redirects {
     @GetMapping("/{id}")
     public Map<String, String> redirect(@PathVariable String id) {
         // check if the container exists
-        ContainerInfo container = dockerService.containerExists(id);
+        ContainerInfo container = dockerService.getSingleContainer(id);
         if (container == null){
             return Map.of("error", "container does not exist");
         }

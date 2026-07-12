@@ -1,11 +1,5 @@
 package com.homeserver.homeserver.util.system;
 
-import com.homeserver.homeserver.util.system.SystemInfoProvider;
-import com.homeserver.homeserver.util.system.ServerInfo;
-
-import com.homeserver.homeserver.util.system.SystemMetric;
-import com.homeserver.homeserver.util.system.SystemMetricProvider;
-
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +19,6 @@ public class ServerService {
 
     @PostConstruct
     public void init() {
-        // function will run once to help load the needed and current metrics
         info = InfoProvider.load();
         refreashMetrics();
     }
@@ -40,7 +33,7 @@ public class ServerService {
         return info;
     }
 
-    public getSystemMetrics() {
+    public SystemMetric getSystemMetrics() {
         // returns the metrics info
         return metrics;
     }

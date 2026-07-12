@@ -1,5 +1,4 @@
 package com.homeserver.homeserver.util.docker;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ContainerInfo {
 
@@ -23,69 +22,21 @@ public class ContainerInfo {
         this.status = status;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public String getImage() { return image; }
+    public String getState() { return state; }
+    public String getStatus() { return status; }
+    public double getCpuUsage() { return cpuUsage; }
+    public long getMemoryUsage() { return memoryUsage; }
+    public long getMemoryLimit() { return memoryLimit; }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public double getCpuUsage() {
-        return cpuUsage;
-    }
-
-    public long getMemoryUsage() {
-        return memoryUsage;
-    }
-
-    public long getMemoryLimit() {
-        return memoryLimit;
-    }
-
-
-    // Setters
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setCpuUsage(double cpuUsage) {
-        this.cpuUsage = cpuUsage;
-    }
-
-    public void setMemoryUsage(long memoryUsage) {
-        this.memoryUsage = memoryUsage;
-    }
-
-    public void setMemoryLimit(long memoryLimit) {
-        this.memoryLimit = memoryLimit;
-    }
+    public void setId(String id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setImage(String image) { this.image = image; }
+    public void setState(String state) { this.state = state; }
+    public void setStatus(String status) { this.status = status; }
+    public void setCpuUsage(double cpuUsage) { this.cpuUsage = cpuUsage; }
+    public void setMemoryUsage(long memoryUsage) { this.memoryUsage = memoryUsage; }
+    public void setMemoryLimit(long memoryLimit) { this.memoryLimit = memoryLimit; }
 }

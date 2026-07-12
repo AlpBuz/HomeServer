@@ -1,12 +1,14 @@
-package com.homeserver.util.system;
+package com.homeserver.homeserver.util.system;
 
 public class SystemMetric {
-    private double CpuMetric;
-    private double MemoryMetric;
+    private final double cpuMetric;
+    private final double memoryMetric;
 
-    @Getter
-    public SystemMetric(double CpuMetric, double MemoryMetric) {
-        this.CpuMetric = CpuMetric;
-        this.MemoryMetric = MemoryMetric;
+    public SystemMetric(double cpuMetric, double memoryMetric) {
+        this.cpuMetric = cpuMetric;
+        this.memoryMetric = memoryMetric;
     }
+
+    public double getCpuMetric() { return cpuMetric; }
+    public double getMemoryMetric() { return memoryMetric; }
 }

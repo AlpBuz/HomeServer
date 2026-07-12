@@ -1,18 +1,23 @@
-package com.homeserver.util.system;
-//** Class is all about storing information about the current system. Does not do any calls to obtain information about the server */
-public class ServerInfo {
-    private String CpuModel;
-    private int CpuCore;
-    private long totalMemory;
-    private String osName;
-    private String osVersion;
+package com.homeserver.homeserver.util.system;
 
-    @Getter
-    public ServerInfo(String CpuModel, int CpuCore, long totalMemory, String osName, String osVersion) {
-        this.CpuModel = CpuModel;
-        this.CpuCore = CpuCore;
-        this.totalMemory = totalMemory
+public class ServerInfo {
+    private final String cpuModel;
+    private final int cpuCore;
+    private final long totalMemory;
+    private final String osName;
+    private final String osVersion;
+
+    public ServerInfo(String cpuModel, int cpuCore, long totalMemory, String osName, String osVersion) {
+        this.cpuModel = cpuModel;
+        this.cpuCore = cpuCore;
+        this.totalMemory = totalMemory;
         this.osName = osName;
         this.osVersion = osVersion;
     }
+
+    public String getCpuModel() { return cpuModel; }
+    public int getCpuCore() { return cpuCore; }
+    public long getTotalMemory() { return totalMemory; }
+    public String getOsName() { return osName; }
+    public String getOsVersion() { return osVersion; }
 }

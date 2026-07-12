@@ -1,55 +1,48 @@
-package com.homeserver.util.system;
-import com.homeserver.util.system.ServerInfo;
+package com.homeserver.homeserver.util.system;
+
+import org.springframework.stereotype.Component;
 
 import oshi.SystemInfo;
 import oshi.software.os.OperatingSystem;
 import oshi.hardware.CentralProcessor;
-
 import oshi.hardware.GlobalMemory;
-import oshi.util.FormatUtil;
 
-//** Class is all about getting the needed information to get the needed data to fill in the SystemInfo class 
-// class does not handle any storing of data just getting of data*/
-
+/** Class is all about getting the needed information to fill in the ServerInfo object.
+ *  It just handles getting the data and creating the ServerInfo object. */
+@Component
 public class SystemInfoProvider {
-    SystemInfo si = new SystemInfo();
-    OperatingSystem os = si.getOperatingSystem();
-    CentralProcessor cpu = si.getHardware().getProcessor();
+    private final SystemInfo systemInfo = new SystemInfo();
+    private final OperatingSystem os = systemInfo.getOperatingSystem();
+    private final CentralProcessor cpu = systemInfo.getHardware().getProcessor();
+    private final GlobalMemory memory = systemInfo.getHardware().getMemory();
 
-    public ServerInfo load(){
-        // returns a ServerInfo class of the current systems info
-        ServerInfo info = new ServerInfo(
+    public ServerInfo load() {
+        return new ServerInfo(
             getCpuModel(),
             getCpuCore(),
             getTotalMemory(),
             getOsName(),
             getOsVersion()
         );
-        return info;
     }
 
-    public String getCpuModel() {
-        // returns the systems cpu name
-        return cpu.getModelName();
-
+    private String getCpuModel() {
+        return cpu.getProcessorIdentifier().getName();
     }
 
-    public int getCpuCore() {
-        // returns the systems cpu cores
+    private int getCpuCore() {
         return cpu.getPhysicalProcessorCount();
     }
 
-    public long getTotalMemory() {
-        // returns the total memory of the system
+    private long getTotalMemory() {
+        return memory.getTotal();
     }
 
-    public String getOsName() {
-        // returns the operator name of the system
-        return os.getName();
+    private String getOsName() {
+        return os.getFamily();
     }
 
-    public String getOsVersion() {
-        // returns the OS version of the system
+    private String getOsVersion() {
         return os.getVersionInfo().getVersion();
     }
 }

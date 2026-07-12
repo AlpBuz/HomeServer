@@ -1,9 +1,12 @@
 package com.homeserver.homeserver.controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.homeserver.homeserver.util.system.ServerService;
+import com.homeserver.homeserver.util.system.ServerInfo;
+import com.homeserver.homeserver.util.system.SystemMetric;
 
 @RestController
 @RequestMapping("/api/system")
@@ -19,18 +22,6 @@ public class SystemController {
         // gets the servers static info such as cpu model, cores, max memory and such
         ServerInfo info = serverService.getServerInfo();
         return info;
-
-        // get cpu model
-
-        // get cores
-
-        // get max memory
-
-        //get os name and version
-
-        // create serverinfo class object
-
-        // return the class object
     }
 
     @GetMapping("metrics")
