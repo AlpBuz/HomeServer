@@ -31,7 +31,6 @@ function ContainerGrid() {
     return (
         <section>
             <h2 className="panel-title">Containers</h2>
-            
         </section>
     )
 }
