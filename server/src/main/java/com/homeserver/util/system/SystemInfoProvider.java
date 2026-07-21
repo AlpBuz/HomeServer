@@ -3,6 +3,7 @@ package com.homeserver.homeserver.util.system;
 import org.springframework.stereotype.Component;
 
 import oshi.SystemInfo;
+import com.homeserver.util.Util;
 import oshi.software.os.OperatingSystem;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
@@ -26,11 +27,6 @@ public class SystemInfoProvider {
         );
     }
 
-    public static long formatBytes(long bytes) {
-        long gb = bytes / (1024 * 1024 * 1024);
-        return gb;
-    }
-
     private String getCpuModel() {
         return cpu.getProcessorIdentifier().getName();
     }
@@ -40,7 +36,7 @@ public class SystemInfoProvider {
     }
 
     private long getTotalMemory() {
-        return formatBytes(memory.getTotal());
+        return Util.formatBytes(memory.getTotal());
     }
 
     private String getOsName() {
