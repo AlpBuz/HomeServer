@@ -58,15 +58,8 @@ public class DockerService {
                     info.setName(c.getNames()[0].replace("/", ""));
                 }
 
-                info.setImage(c.getImage());
                 info.setState(c.getState());
                 info.setStatus(c.getStatus());
-
-                // Only bother pulling live stats for running containers —
-                // stats calls on stopped containers just error out.
-                if ("running".equalsIgnoreCase(c.getState())) {
-                    populateStats(info);
-                }
 
                 updated.add(info);
             }
@@ -80,57 +73,6 @@ public class DockerService {
             // Don't let a Docker hiccup take down the whole scheduled task
             // (or, if this were still in @PostConstruct, the whole app context).
             log.error("Failed to refresh containers", e);
-        }
-    }
-
-    private void populateStats(ContainerInfo info) {
-        try {
-            StatsCmd statsCmd = dockerClient.statsCmd(info.getId());
-            statsCmd.withNoStream(true); // single snapshot, not an ongoing stream
-
-            CountDownLatch latch = new CountDownLatch(1);
-            Statistics[] result = new Statistics[1];
-
-            statsCmd.exec(new ResultCallback.Adapter<Statistics>() {
-                @Override
-                public void onNext(Statistics stats) {
-                    result[0] = stats;
-                    latch.countDown();
-                }
-            });
-
-            latch.await(3, TimeUnit.SECONDS);
-            statsCmd.close();
-
-            Statistics stats = result[0];
-            if (stats == null || stats.getCpuStats() == null || stats.getPreCpuStats() == null) {
-                return;
-            }
-
-            long cpuDelta = stats.getCpuStats().getCpuUsage().getTotalUsage()
-                    - stats.getPreCpuStats().getCpuUsage().getTotalUsage();
-            long systemDelta = stats.getCpuStats().getSystemCpuUsage()
-                    - stats.getPreCpuStats().getSystemCpuUsage();
-
-            Long onlineCpusRaw = stats.getCpuStats().getOnlineCpus();
-            int onlineCpus = onlineCpusRaw != null ? onlineCpusRaw.intValue() : 1;
-
-            if (systemDelta > 0 && cpuDelta > 0) {
-                double cpuPercent = ((double) cpuDelta / systemDelta) * onlineCpus * 100.0;
-                info.setCpuUsage(cpuPercent);
-            }
-
-            if (stats.getMemoryStats() != null) {
-                if (stats.getMemoryStats().getUsage() != null) {
-                    info.setMemoryUsage(stats.getMemoryStats().getUsage());
-                }
-                if (stats.getMemoryStats().getLimit() != null) {
-                    info.setMemoryLimit(stats.getMemoryStats().getLimit());
-                }
-            }
-
-        } catch (Exception e) {
-            log.warn("Failed to get stats for container {}", info.getId(), e);
         }
     }
 

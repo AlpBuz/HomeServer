@@ -6,16 +6,10 @@ import { api } from "../api/requests";
 // Need to finish container cards and create the buttons
 // need to establish the api calls
 
-function useContainers () {
-    // function is called to fetch the containers
-    const [containers, setContainers] = useState([]); // will contain the list of containers
-    const [error, setError] = useState(null); // flag to set for any errors that happens
-}
-
 
 
 // component for each container card being created
-function ContainerCard({ containerID, name, state, status, cpuUsage, memoryUsage }) {
+function ContainerCard({ containerID, name, state, status}) {
     return (
         <li className="Container-Card">
             <div className="Card-Info">
@@ -23,8 +17,6 @@ function ContainerCard({ containerID, name, state, status, cpuUsage, memoryUsage
                 <p>Name: {name}</p>
                 <p>State: {state}</p>
                 <p>Status: {status}</p>
-                <p>CPU: {cpuUsage}%</p>
-                <p>Memory: {memoryUsage} MB</p>
             </div>
 
             <div className="container-Actions">
@@ -37,9 +29,69 @@ function ContainerCard({ containerID, name, state, status, cpuUsage, memoryUsage
 }
 
 function ContainerGrid() {
+    const [containers, setContainers] = useState([]); // will contain the list of containers
+    const [error, setError] = useState(false); // flag to set for any errors that happens
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        async function loadContainers() {
+            try {
+                setLoading(true);
+                const response = await api.getContainers();
+                console.group(response);
+                setContainers(response);
+                setError(false);
+            } catch (err) {
+                console.log(err);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadContainers();
+    }, []);
+
+    if (loading) {
+        return (
+            <section>
+                <p>Loading...</p>
+            </section>
+        )
+    }
+
+    if (error) {
+        return(
+            <section>
+                <p>An Error has occured when fetching the containers</p>
+            </section>
+        )
+    }
+
+    if (containers.length === 0) {
+        return(
+            <section>
+                <p>No containers has been found</p>
+            </section>
+        )
+    }
+
     return (
         <section>
             <h2 className="panel-title">Containers</h2>
+
+            {containers.map(container => {
+                console.log(container);
+
+                return (
+                    <ContainerCard
+                        key={container.id}
+                        containerID={container.id}
+                        name={container.name}
+                        state={container.state}
+                        status={container.status}
+                    />
+                );
+            })}
         </section>
     )
 }
