@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { api } from "../api/client";
+import { api } from "../api/requests";
 // TODO: 
 // Need a useEffect to fetch the inital container information
 // Need to establish a blank grid for no containers in the system

@@ -15,7 +15,7 @@ public class DockerConfig {
     @Bean
     public DockerClient dockerClient() {
         DockerClientConfig config = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                .withDockerHost("unix:///var/run/docker.sock")
+                .withDockerHost("tcp://docker-proxy:2375")
                 .build();
 
         DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
