@@ -1,23 +1,18 @@
-package com.homeserver.homeserver.util.docker;
-
+package com.homeserver.util.docker;
+import org.springframework.stereotype.Service;
 import com.github.dockerjava.api.DockerClient;
-import com.github.dockerjava.api.async.ResultCallback;
-import com.github.dockerjava.api.command.StatsCmd;
 import com.github.dockerjava.api.model.Container;
-import com.github.dockerjava.api.model.Statistics;
+import com.homeserver.util.ApiResponse;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class DockerService {
@@ -99,9 +94,9 @@ public class DockerService {
         return container == null ? "Container does not exist" : container.getStatus();
     }
 
-    public String performAction(String id, String action) {
+    public ApiResponse performAction(String id, String action) {
         if (!containerExists(id)) {
-            return "container does not exist";
+            return new ApiResponse(false, action);
         }
 
         try {
@@ -109,21 +104,21 @@ public class DockerService {
                 case "start":
                     dockerClient.startContainerCmd(id).exec();
                     refreshContainers();
-                    return "container started";
+                    return new ApiResponse(true, "Container has been started");
                 case "stop":
                     dockerClient.stopContainerCmd(id).exec();
                     refreshContainers();
-                    return "container stopped";
+                    return new ApiResponse(true, "Container has been Stopped");
                 case "restart":
                     dockerClient.restartContainerCmd(id).exec();
                     refreshContainers();
-                    return "container has been restarted";
+                    return new ApiResponse(true, "Container has been restarted");
                 default:
-                    return "unknown action so no action performed on container";
+                    return new ApiResponse(false, "Unkown action has been performed, nothing has happened");
             }
         } catch (Exception e) {
             log.error("Failed to perform action '{}' on container {}", action, id, e);
-            return "action failed: " + e.getMessage();
+            return new ApiResponse(false, "An error has happened");
         }
     }
 }

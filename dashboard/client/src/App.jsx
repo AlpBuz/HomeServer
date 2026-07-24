@@ -12,7 +12,6 @@ function App() {
       <header>
         <span>HomeServer</span>
       </header>
-
       <main>
         <ServiceLinks />
 

@@ -1,16 +1,13 @@
-package com.homeserver.homeserver;
-import com.homeserver.homeserver.util.docker.DockerService;
-import com.homeserver.homeserver.util.docker.ContainerInfo;
+package com.homeserver.Controllers;
+import com.homeserver.util.docker.DockerService;
+import com.homeserver.util.docker.ContainerInfo;
+import com.homeserver.util.ApiResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,21 +26,22 @@ public class DockerController {
     }
 
     @PostMapping("/{id}/start") // starts the given container
-    public String start(@PathVariable String id) throws Exception {
-        String message = dockerService.performAction(id, "start");
-        return message;
+    public ApiResponse start(@PathVariable String id) throws Exception {
+        ApiResponse response = dockerService.performAction(id, "start");
+        return response;
     }
 
     @PostMapping("/{id}/stop") // stops the given container
-    public String stop(@PathVariable String id) throws Exception {
-        String message = dockerService.performAction(id, "stop");
-        return message;
+    public ApiResponse stop(@PathVariable String id) throws Exception {
+        ApiResponse response = dockerService.performAction(id, "stop");
+        return response;
     }
 
     @PostMapping("/{id}/restart") // restarts the given container
-    public String restart(@PathVariable String id) throws Exception {
-        String message = dockerService.performAction(id, "restart");
-        return message;
+    public ApiResponse restart(@PathVariable String id) throws Exception {
+        ApiResponse response = dockerService.performAction(id, "restart");
+        
+        return response;
     }
 
 }

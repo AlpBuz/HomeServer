@@ -1,4 +1,4 @@
-package com.homeserver.homeserver.util.docker;
+package com.homeserver.util.docker;
 import java.util.Set;
 
 public class ContainerInfo {

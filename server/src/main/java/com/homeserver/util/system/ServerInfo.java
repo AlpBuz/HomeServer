@@ -1,4 +1,4 @@
-package com.homeserver.homeserver.util.system;
+package com.homeserver.util.system;
 
 public class ServerInfo {
     private final String cpuModel;

@@ -1,4 +1,4 @@
-package com.homeserver.homeserver.util.docker;
+package com.homeserver.util.docker;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DefaultDockerClientConfig;

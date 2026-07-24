@@ -1,4 +1,4 @@
-package com.homeserver.homeserver.util.system;
+package com.homeserver.util.system;
 
 import org.springframework.stereotype.Component;
 

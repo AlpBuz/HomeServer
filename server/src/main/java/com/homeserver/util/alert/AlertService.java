@@ -1,6 +1,6 @@
 package com.homeserver.util.alert;
-import com.homeserver.homeserver.util.docker.DockerService;
-import com.homeserver.homeserver.util.docker.ContainerInfo;
+import com.homeserver.util.docker.DockerService;
+import com.homeserver.util.docker.ContainerInfo;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;

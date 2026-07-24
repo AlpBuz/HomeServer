@@ -1,4 +1,4 @@
-package com.homeserver.homeserver.controller;
+package com.homeserver.homeserver;
 import com.homeserver.homeserver.util.docker.DockerService;
 import com.homeserver.homeserver.util.docker.ContainerInfo;
 

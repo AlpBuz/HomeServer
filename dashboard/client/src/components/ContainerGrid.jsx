@@ -1,15 +1,39 @@
 import { useState, useEffect } from "react";
 import { api } from "../api/requests";
-// TODO: 
-// Need a useEffect to fetch the inital container information
-// Need to establish a blank grid for no containers in the system
-// Need to finish container cards and create the buttons
-// need to establish the api calls
-
+const ACTIONS = ["Start", "Stop", "Restart"];
 
 
 // component for each container card being created
 function ContainerCard({ containerID, name, state, status}) {
+    const [actionMessage, setActionMessage] = useState("");
+
+    async function buttonAction(action) {
+        // console.log(`Action: ${action} performed on container ID: ${containerID}`);
+
+        const actions = {
+            Start: api.startContainer,
+            Stop: api.stopContainer,
+            Restart: api.restartContainer,
+        };
+
+        const actionFunction = actions[action];
+
+        if (!actionFunction) {
+            console.log("not a valid action");
+            return;
+        }
+
+        try {
+            const {success, message} = await actionFunction(containerID);
+            console.log(success, message);
+            setActionMessage(message)
+            
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
     return (
         <li className="Container-Card">
             <div className="Card-Info">
@@ -20,9 +44,10 @@ function ContainerCard({ containerID, name, state, status}) {
             </div>
 
             <div className="container-Actions">
-                <button>Start</button>
-                <button>Stop</button>
-                <button>Restart</button>
+                <p id="actionMessage">{actionMessage}</p>
+                <button onClick={() => buttonAction("Start")}>Start</button>
+                <button onClick={() => buttonAction("Stop")}>Stop</button>
+                <button onClick={() => buttonAction("Restart")}>Restart</button>
             </div>
         </li>
     )
@@ -31,7 +56,7 @@ function ContainerCard({ containerID, name, state, status}) {
 function ContainerGrid() {
     const [containers, setContainers] = useState([]); // will contain the list of containers
     const [error, setError] = useState(false); // flag to set for any errors that happens
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); // flag if it is currently loading
 
     useEffect(() => {
         async function loadContainers() {
@@ -78,20 +103,19 @@ function ContainerGrid() {
     return (
         <section>
             <h2 className="panel-title">Containers</h2>
-
-            {containers.map(container => {
-                console.log(container);
-
-                return (
-                    <ContainerCard
-                        key={container.id}
-                        containerID={container.id}
-                        name={container.name}
-                        state={container.state}
-                        status={container.status}
-                    />
-                );
-            })}
+            <ul>
+                {containers.map(container => {
+                    return (
+                        <ContainerCard
+                            key={container.id}
+                            containerID={container.id}
+                            name={container.name}
+                            state={container.state}
+                            status={container.status}
+                        />
+                    );
+                })}
+            </ul>
         </section>
     )
 }

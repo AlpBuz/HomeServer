@@ -1,12 +1,12 @@
-package com.homeserver.homeserver.controller;
+package com.homeserver.Controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.homeserver.homeserver.util.system.ServerService;
-import com.homeserver.homeserver.util.system.ServerInfo;
-import com.homeserver.homeserver.util.system.SystemMetric;
+import com.homeserver.util.system.ServerService;
+import com.homeserver.util.system.ServerInfo;
+import com.homeserver.util.system.SystemMetric;
 
 @RestController
 @RequestMapping("/api/system")
