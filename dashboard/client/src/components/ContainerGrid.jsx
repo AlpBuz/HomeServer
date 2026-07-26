@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
 import { api } from "../api/requests";
 const ACTIONS = ["Start", "Stop", "Restart"];
+import "../style/ContainerGrid.css";
+
+
+
 
 
 // component for each container card being created
 function ContainerCard({ containerID, name, state, status}) {
     const [actionMessage, setActionMessage] = useState("");
+    const [error, setError] = useState(false);
 
     async function buttonAction(action) {
         // console.log(`Action: ${action} performed on container ID: ${containerID}`);
-
+        setError(false);
         const actions = {
             Start: api.startContainer,
             Stop: api.stopContainer,
@@ -20,16 +25,18 @@ function ContainerCard({ containerID, name, state, status}) {
 
         if (!actionFunction) {
             console.log("not a valid action");
+            setError(true);
             return;
         }
 
         try {
             const {success, message} = await actionFunction(containerID);
-            console.log(success, message);
-            setActionMessage(message)
+            //console.log(success, message);
+            setActionMessage(message);
             
         } catch (err) {
             console.error(err);
+            setError(true);
         }
     }
 
@@ -101,9 +108,9 @@ function ContainerGrid() {
     }
 
     return (
-        <section>
+        <section className="container-panel">
             <h2 className="panel-title">Containers</h2>
-            <ul>
+            <ul className="container-list">
                 {containers.map(container => {
                     return (
                         <ContainerCard

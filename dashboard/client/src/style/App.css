@@ -1,0 +1,28 @@
+.homeserver {
+    align-items: center;
+    border: 2px solid green;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+.homeserver-header {
+    border: 2px solid red;
+    padding: 10px;
+}
+
+.homeserver-main {
+    border: 2px solid blue;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 10px;
+}
+
+.features-panel {
+    border: 2px solid purple;
+    padding: 2px;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-row-gap: 10px;
+}
