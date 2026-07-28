@@ -1,6 +1,7 @@
 package com.homeserver.Controllers;
 import com.homeserver.util.docker.DockerService;
 import com.homeserver.util.docker.ContainerInfo;
+import com.github.dockerjava.api.command.InspectExecResponse.Container;
 import com.homeserver.util.ApiResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,11 @@ public class DockerController {
     @GetMapping("/getContainers")
     public List<ContainerInfo> status() {
         return dockerService.getContainers();
+    }
+
+    @GetMapping("/getApplications")
+    public List<ContainerInfo> getApplications() {
+        return dockerService.getApplications();
     }
 
     @PostMapping("/{id}/start") // starts the given container

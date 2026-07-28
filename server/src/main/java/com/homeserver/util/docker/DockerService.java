@@ -76,6 +76,18 @@ public class DockerService {
         return Collections.unmodifiableList(containers);
     }
 
+    public List<ContainerInfo> getApplications() {
+        // returning a list of container Info but only with the application flag on true
+        List<ContainerInfo> applications = new ArrayList<>();
+        for (ContainerInfo c :containers){
+            if (c.getApplication() == true){
+                applications.add(c);
+            }
+        }
+
+        return applications;
+    }
+
     public ContainerInfo getSingleContainer(String id) {
         for (ContainerInfo c : containers) {
             if (c.getId().equals(id)) {
