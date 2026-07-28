@@ -16,9 +16,9 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-  getSystemInfo: () => request("/system/info"),
-  getSystemMetrics: () => request("/system/metrics"),
-  getContainers: () => request("/docker/getContainers"),
+  getSystemInfo: () => request("/system/info", {method: "GET"}),
+  getSystemMetrics: () => request("/system/metrics", {method: "GET"}),
+  getContainers: () => request("/docker/getContainers", {method: "GET"}),
   startContainer: (id) => request(`/docker/${id}/start`, { method: "POST" }),
   stopContainer: (id) => request(`/docker/${id}/stop`, { method: "POST" }),
   restartContainer: (id) => request(`/docker/${id}/restart`, { method: "POST" }),

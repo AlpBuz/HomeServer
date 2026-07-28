@@ -70,7 +70,6 @@ function ContainerGrid() {
             try {
                 setLoading(true);
                 const response = await api.getContainers();
-                console.group(response);
                 setContainers(response);
                 setError(false);
             } catch (err) {

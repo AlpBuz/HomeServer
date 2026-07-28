@@ -1,4 +1,28 @@
 .System-panel {
-    border: 2px solid green;
-    padding: 2px;
+  display: grid;
+  grid-template-areas: 
+    "header header"
+    "serverInfo SystemMetrics";
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid green;
+  padding: 2px;
+  gap: 1rem;
+  align-content: start;
+}
+
+.panel-title {
+    grid-area: header;
+}
+
+.serverInfo {
+    grid-area: serverInfo;
+    border: 2px solid royalblue;
+    padding: 5px;
+}
+
+.SystemMetrics {
+    grid-area: SystemMetrics;
+    border: 2px solid black;
+    padding: 5px;
 }
