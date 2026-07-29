@@ -9,7 +9,7 @@ import './style/App.css'
 function App() {
   return (
     <div className="homeserver">
-      <header className='homeserver-header'>
+      <header className='homeserver-sidebar'>
         <h1>HomeServer</h1>
         <div>
           <p>10/24/2026</p>

@@ -1,14 +1,14 @@
 .System-panel {
-  display: grid;
-  grid-template-areas: 
-    "header header"
-    "serverInfo SystemMetrics";
-  grid-template-rows: auto auto;
-  grid-template-columns: 1fr 1fr;
-  border: 2px solid green;
-  padding: 2px;
-  gap: 1rem;
-  align-content: start;
+    background-color: var(--card-bg);
+    display: grid;
+    grid-template-areas:"header header" "serverInfo SystemMetrics";
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid var(--border);
+    border-radius: var(--borderRadius);
+    padding: var(--padding);
+    gap: 1rem;
+    align-content: start;
 }
 
 .panel-title {

@@ -19,7 +19,7 @@ function ServiceLinks () {
     // fetch the endpoint to get all the applications and its info.
 
 
-    // inside the html 
+    // remove the h2 line and just have buttons inside the one section tag should be good
     return (
         <section className="ServiceLinks-panel">
             <h2 className="panel-title">SerivceLinks</h2>

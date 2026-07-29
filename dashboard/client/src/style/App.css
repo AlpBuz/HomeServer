@@ -2,30 +2,35 @@
 /* grid template for the main homeserver: 1 column 2 rows*/
 .homeserver {
     display: grid;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-        "header"
-        "main";
-    gap: 1rem;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "sidebar main";
     min-height: 100vh;
 }
 
-.homeserver-header {
-    grid-area: header;
+.homeserver-sidebar {
+    color: var(--text-secondary);
+    background: var(--sidebar-bg);
+    grid-area: sidebar;
+    padding: var(--padding);
 }
 
 
 .homeserver-main {
-    border: solid 2px black;
-    padding: 5px;
     grid-area: main;
     display: grid;
-    grid-template-columns: auto auto;   /* SystemOverview | features-panel */
+    grid-template-columns: auto auto;
+    align-items: start;
     gap: 1rem;
+    padding: var(--padding);
+    padding-top: 0px;
 }
 
 .features-panel {
+    background-color: var(--card-bg);
     display: flex;
     flex-direction: column;
+    border: 2px solid var(--border);
+    border-radius: var(--borderRadius);
+    padding: var(--padding);
     gap: 1rem;
 }
