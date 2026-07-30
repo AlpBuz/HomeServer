@@ -1,4 +1,18 @@
 .container-panel {
-    border: 2px solid red;
+    border: 2px solid var(--border);
+    background-color: var(--card-bg);
+    border-radius: var(--borderRadius);
+    padding: 15px;
+}
+
+.panel-title {
+    border-bottom: solid 2px var(--sidebar-bg);
     padding: 2px;
+}
+
+.container-list {
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    list-style: none;
 }
