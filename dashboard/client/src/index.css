@@ -4,6 +4,7 @@
     --card-bg: white;
     --border: #a0a4a9;         /* card borders */
     --text-primary: black;   /* headings, main text */
+    --sidebar-color: ghostwhite;
     --text-secondary: #8b949e; /* labels, muted text */
     --accent: #58a6ff;         /* links, highlights, primary accent */
     --success: #3fb950;        /* "running" / healthy status */
