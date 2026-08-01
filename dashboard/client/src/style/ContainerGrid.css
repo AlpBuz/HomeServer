@@ -1,5 +1,6 @@
 .container-panel {
-    border: 2px solid var(--border);
+    border: 1px solid var(--page_bg);
+    border-left: 3px solid var(--border);
     background-color: var(--card-bg);
     border-radius: var(--borderRadius);
     padding: 15px;
@@ -15,4 +16,28 @@
     overflow-x: hidden;
     overflow-y: scroll;
     list-style: none;
+}
+
+
+
+/* Container Card Styling */
+.Container-Card {
+    display: grid;
+    grid-template-areas: "CardInfo" "Actions";
+    grid-template-columns: auto auto;
+    border: solid 2px var(--border);
+    padding: var(--padding);
+}
+
+.Card-Info {
+    grid-area: CardInfo;
+    /* display: grid; */
+    /* grid-template-areas: "";
+    grid-template-rows: "";
+    grid-column: ""; */
+
+}
+
+.container-Actions {
+    grid-area: Actions;
 }

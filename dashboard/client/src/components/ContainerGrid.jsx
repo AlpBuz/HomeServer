@@ -44,10 +44,10 @@ function ContainerCard({ containerID, name, state, status}) {
     return (
         <li className="Container-Card">
             <div className="Card-Info">
-                <p>ID: {containerID}</p>
-                <p>Name: {name}</p>
-                <p>State: {state}</p>
-                <p>Status: {status}</p>
+                <p className="Container-ID">ID: {containerID}</p>
+                <p className="Container-Name">Name: {name}</p>
+                <p className="Container-State">State: {state}</p>
+                <p className="Container-Status">Status: {status}</p>
             </div>
 
             <div className="container-Actions">

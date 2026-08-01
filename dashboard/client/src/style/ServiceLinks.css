@@ -1,5 +1,6 @@
 .ServiceLinks-panel {
-    border: 2px solid green;
+    border: 1px solid var(--page-bg);
+    border-left: 3px solid var(--border);
     background-color: var(--card-bg);
     border-radius: var(--borderRadius);
     padding: var(--padding);

@@ -1,18 +1,18 @@
 :root {
-    --sidebar-bg: #1B1E2A;     /* sidebar background color */
-    --page-bg: #EAF2E6;        /* page background */
-    --card-bg: white;
-    --border: #a0a4a9;         /* card borders */
-    --text-primary: black;   /* headings, main text */
+    --sidebar-bg: #191a20;
+    --page-bg: #14151a;
+    --card-bg: #1c1e25;
+    --border: #4ea1ff;
+    --stat-labels: #6c6f7a; 
+    --text-primary: ghostwhite;
     --sidebar-color: ghostwhite;
-    --text-secondary: #8b949e; /* labels, muted text */
-    --accent: #58a6ff;         /* links, highlights, primary accent */
-    --success: #3fb950;        /* "running" / healthy status */
-    --warning: #d29922;        /* degraded / warning status */
-    --danger: #f85149;         /* stopped / error status */
-  
-    --borderRadius: 10px;         /* The universal border radius value*/
-    --padding: 20px;              /* universal padding */
+    --text-secondary: #8b949e;
+    --accent: #58a6ff;
+    --success: #3fb950;
+    --warning: #d29922;
+    --danger: #f85149;
+    --borderRadius: 10px;
+    --padding: 20px;
 }
 
 body {

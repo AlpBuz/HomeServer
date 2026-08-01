@@ -2,45 +2,64 @@ import { useState, useEffect } from "react";
 import { api } from "../api/requests";
 import "../style/SystemOverview.css";
 
-
-function ServerInfo({ info }) {
+function CpuInfoCard ({ info }) {
     return (
-        <section className="serverInfo">
-            <h3>Server Info</h3>
-            <dl>
-                <dt>CPU Model: </dt>
-                <dd>{info.cpuModel || "Unknown"}</dd>
-
-                <dt>CPU Cores: </dt>
-                <dd>{info.cpuCore || "Unknown"}</dd>
-
-                <dt>Total Memory: </dt>
-                <dd>{info.totalMemory || "Unknown"}</dd>
-
-                <dt>OS Name: </dt>
-                <dd>{info.osName || "Unknown"}</dd>
-
-                <dt>OS Version: </dt>
-                <dd>{info.osVersion || "Unknown"}</dd>
-            </dl>
-        </section>
+        <div className="stat-card">
+            <p className="stat-label">CPU Cores: </p>
+            <p className="stat-value">{info.cpuCore || "Unknown"}</p>
+            <p className="stat-subtext">CPU: {info.cpuModel || "Unknown"}</p>
+        </div>
     )
 }
 
-function SystemMetrics({ metrics }) {
-    console.group(metrics.cpuMetric);
-    return(
-        <section className="SystemMetrics">
-            <h3>System Metrics</h3>
-            <dl>
-                <dt>CPU Usuage: </dt>
-                <dd>{metrics.cpuMetric}</dd>
-
-                <dt>Memory Usuage: </dt>
-                <dd>{metrics.memoryMetric}</dd>
-            </dl>
-        </section>
+function MemoryInfoCard ({ info }) {
+    return (
+        <div className="stat-card">
+            <p className="stat-label">Total Memory: </p>
+            <p className="stat-value">
+                {info.totalMemory || "Unknown"} <span className="stat-unit">GB</span>
+            </p>
+        </div>
     )
+}
+
+function CpuUsuageCard({ metrics }) {
+  return (
+    <div className="stat-card">
+      <p className="stat-label">CPU usage</p>
+      <p className="stat-value">{metrics.cpuMetric}%</p>
+
+      <div className="stat-bar">
+        <div className="stat-bar-fill" style={{ width: `${metrics.cpuMetric}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function MemoryUsuageCard ({ metrics }) {
+    return(
+        <div className="stat-card">
+            <p className="stat-label">Memory Usuage: </p>
+            <p className="stat-value">{metrics.memoryMetric}</p>
+
+            <div className="stat-bar">
+                <div className="stat-bar-fill" style={{ width: `${metrics.memoryMetric}%` }} />
+            </div>
+        </div>
+    )
+}
+
+
+function SystemViewSection ({info, metrics}) {
+    return (
+        <div className="stat-grid">
+            <CpuUsuageCard metrics={metrics} />
+            <MemoryUsuageCard metrics={metrics} />
+            <CpuInfoCard info={info} />
+            <MemoryInfoCard info={info} />
+        </div>
+    )
+
 }
 
 
@@ -73,9 +92,8 @@ function SystemOverview () {
     
     return (
         <section className="System-panel">
-            <h2 className="panel-title">SystemOverview</h2>
-            <ServerInfo info={serverInfo}/>
-            <SystemMetrics metrics={metricsInfo}/>
+            <h3>{serverInfo.osName} {serverInfo.osVersion}</h3>
+            <SystemViewSection info={serverInfo} metrics={metricsInfo} />
         </section>
     )
 }

@@ -18,7 +18,7 @@
 .homeserver-main {
     grid-area: main;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
     align-items: start;
     gap: 1rem;
     padding: var(--padding);
@@ -27,11 +27,7 @@
 }
 
 .features-panel {
-    /* background-color: var(--card-bg); */
     display: flex;
     flex-direction: column;
-    /* border: 2px solid var(--border); */
-    /* border-radius: var(--borderRadius); */
-    /* padding: var(--padding); */
     gap: 1rem;
 }
