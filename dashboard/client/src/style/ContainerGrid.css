@@ -44,13 +44,20 @@
 
 .action-message {
     color: #28a745;
+    font-weight: 600;
+    margin-bottom: 12px;
     opacity: 1;
     transition: opacity 0.5s ease;
-    min-height: 1.2rem;
 }
 
 .action-message.fade-out {
     opacity: 0;
+}
+
+.error-message {
+    color: #dc3545;
+    font-weight: 600;
+    margin-bottom: 12px;
 }
 
 .buttons {

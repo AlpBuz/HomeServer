@@ -1,22 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaPlay, FaStop, FaRedo } from "react-icons/fa";
 import { api } from "../api/requests";
 const ACTIONS = ["Start", "Stop", "Restart"];
 import "../style/ContainerGrid.css";
 
 
-
-
-
 // component for each container card being created
-function ContainerCard({ containerID, name, state, status}) {
+function ContainerCard({ containerID, name, state, status }) {
     const [actionMessage, setActionMessage] = useState("");
     const [fadeOut, setFadeOut] = useState(false);
     const [error, setError] = useState(false);
 
+    const fadeTimer = useRef(null);
+    const removeTimer = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            clearTimeout(fadeTimer.current);
+            clearTimeout(removeTimer.current);
+        };
+    }, []);
+
     async function buttonAction(action) {
-        // console.log(`Action: ${action} performed on container ID: ${containerID}`);
         setError(false);
+
         const actions = {
             Start: api.startContainer,
             Stop: api.stopContainer,
@@ -26,24 +33,27 @@ function ContainerCard({ containerID, name, state, status}) {
         const actionFunction = actions[action];
 
         if (!actionFunction) {
-            console.log("not a valid action");
             setError(true);
             return;
         }
 
         try {
-            const { success, message } = await actionFunction(containerID);
+            const { message } = await actionFunction(containerID);
+
+            // Cancel any previous timers
+            clearTimeout(fadeTimer.current);
+            clearTimeout(removeTimer.current);
 
             setActionMessage(message);
             setFadeOut(false);
 
-            // Start fading after 2.5 seconds
-            setTimeout(() => {
+            // Fade after 2.5 seconds
+            fadeTimer.current = setTimeout(() => {
                 setFadeOut(true);
             }, 2500);
 
             // Remove after 3 seconds
-            setTimeout(() => {
+            removeTimer.current = setTimeout(() => {
                 setActionMessage("");
                 setFadeOut(false);
             }, 3000);
@@ -54,7 +64,6 @@ function ContainerCard({ containerID, name, state, status}) {
         }
     }
 
-    // status bar should be color depending on the status of the container
     return (
         <li className="Container-Card">
             <div className="Card-Info">
@@ -62,22 +71,31 @@ function ContainerCard({ containerID, name, state, status}) {
                     <p className="Container-Name">Name: {name}</p>
                     <p className="Container-Status">Status: {status}</p>
                 </div>
+
                 <p className="Container-State">State: {state}</p>
             </div>
 
             <div className="container-Actions">
-                <p className={`action-message ${fadeOut ? "fade-out" : ""}`}>
-                    {actionMessage}
-                </p>
+                {actionMessage && (
+                    <p className={`action-message ${fadeOut ? "fade-out" : ""}`}>
+                        {actionMessage}
+                    </p>
+                )}
+
+                {error && (
+                    <p className="error-message">
+                        Something went wrong.
+                    </p>
+                )}
 
                 <div className="buttons">
                     <button className="container-button" onClick={() => buttonAction("Start")}> <span className="button-icon"><FaPlay /></span> Start</button>
                     <button className="container-button" onClick={() => buttonAction("Stop")}> <span className="button-icon"><FaStop /></span> Stop</button>
-                    <button className="container-button" onClick={() => buttonAction("Restart")}> <span className="button-icon"><FaRedo /></span> Restart</button>
+                    <button className="container-button" onClick={() => buttonAction("Restart")}><span className="button-icon"><FaRedo /></span> Restart</button>
                 </div>
             </div>
         </li>
-    )
+    );
 }
 
 
