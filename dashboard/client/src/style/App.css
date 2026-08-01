@@ -12,6 +12,7 @@
     background: var(--sidebar-bg);
     grid-area: sidebar;
     padding: var(--padding);
+    padding-right: 150px;
 }
 
 

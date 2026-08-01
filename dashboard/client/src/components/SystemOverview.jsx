@@ -19,6 +19,7 @@ function MemoryInfoCard ({ info }) {
             <p className="stat-value">
                 {info.totalMemory || "Unknown"} <span className="stat-unit">GB</span>
             </p>
+            <p className="stat-subtext">{info.osName} {info.osVersion}</p>
         </div>
     )
 }
@@ -92,7 +93,6 @@ function SystemOverview () {
     
     return (
         <section className="System-panel">
-            <h3>{serverInfo.osName} {serverInfo.osVersion}</h3>
             <SystemViewSection info={serverInfo} metrics={metricsInfo} />
         </section>
     )

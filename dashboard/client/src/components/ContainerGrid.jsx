@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { FaPlay, FaStop, FaRedo } from "react-icons/fa";
 import { api } from "../api/requests";
 const ACTIONS = ["Start", "Stop", "Restart"];
 import "../style/ContainerGrid.css";
@@ -10,6 +11,7 @@ import "../style/ContainerGrid.css";
 // component for each container card being created
 function ContainerCard({ containerID, name, state, status}) {
     const [actionMessage, setActionMessage] = useState("");
+    const [fadeOut, setFadeOut] = useState(false);
     const [error, setError] = useState(false);
 
     async function buttonAction(action) {
@@ -30,35 +32,55 @@ function ContainerCard({ containerID, name, state, status}) {
         }
 
         try {
-            const {success, message} = await actionFunction(containerID);
-            //console.log(success, message);
+            const { success, message } = await actionFunction(containerID);
+
             setActionMessage(message);
-            
+            setFadeOut(false);
+
+            // Start fading after 2.5 seconds
+            setTimeout(() => {
+                setFadeOut(true);
+            }, 2500);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                setActionMessage("");
+                setFadeOut(false);
+            }, 3000);
+
         } catch (err) {
             console.error(err);
             setError(true);
         }
     }
 
-
+    // status bar should be color depending on the status of the container
     return (
         <li className="Container-Card">
             <div className="Card-Info">
-                <p className="Container-ID">ID: {containerID}</p>
-                <p className="Container-Name">Name: {name}</p>
+                <div>
+                    <p className="Container-Name">Name: {name}</p>
+                    <p className="Container-Status">Status: {status}</p>
+                </div>
                 <p className="Container-State">State: {state}</p>
-                <p className="Container-Status">Status: {status}</p>
             </div>
 
             <div className="container-Actions">
-                <p id="actionMessage">{actionMessage}</p>
-                <button onClick={() => buttonAction("Start")}>Start</button>
-                <button onClick={() => buttonAction("Stop")}>Stop</button>
-                <button onClick={() => buttonAction("Restart")}>Restart</button>
+                <p className={`action-message ${fadeOut ? "fade-out" : ""}`}>
+                    {actionMessage}
+                </p>
+
+                <div className="buttons">
+                    <button className="container-button" onClick={() => buttonAction("Start")}> <span className="button-icon"><FaPlay /></span> Start</button>
+                    <button className="container-button" onClick={() => buttonAction("Stop")}> <span className="button-icon"><FaStop /></span> Stop</button>
+                    <button className="container-button" onClick={() => buttonAction("Restart")}> <span className="button-icon"><FaRedo /></span> Restart</button>
+                </div>
             </div>
         </li>
     )
 }
+
+
 
 function ContainerGrid() {
     const [containers, setContainers] = useState([]); // will contain the list of containers
