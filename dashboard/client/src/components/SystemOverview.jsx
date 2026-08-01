@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { api } from "../api/requests";
+import { api, pollingFunction } from "../api/requests";
 import "../style/SystemOverview.css";
 
 function CpuInfoCard ({ info }) {
@@ -69,7 +69,7 @@ function SystemOverview () {
     const [metricsInfo, setMetricsInfo] = useState({});
     const [error, setError] = useState(false);
 
-    // fetching the serverInfo and the metrics info
+    // fetching the serverInfo once
     useEffect(() => {
         let isMounted = true;
 
@@ -84,10 +84,21 @@ function SystemOverview () {
         }
 
         fetchData(api.getSystemInfo, setServerInfo);
-        fetchData(api.getSystemMetrics, setMetricsInfo);
 
         return () => {
             isMounted = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        const stopPolling = pollingFunction(
+        api.getSystemMetrics, // function to call
+        (data) => setMetricsInfo(data), // what to do with response
+        5000 // interval
+        );
+
+        return () => {
+        stopPolling(); // cleanup when component unmounts
         };
     }, []);
     

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FaPlay, FaStop, FaRedo } from "react-icons/fa";
-import { api } from "../api/requests";
+import { api, pollingFunction } from "../api/requests";
 const ACTIONS = ["Start", "Stop", "Restart"];
 import "../style/ContainerGrid.css";
 
@@ -106,20 +106,15 @@ function ContainerGrid() {
     const [loading, setLoading] = useState(false); // flag if it is currently loading
 
     useEffect(() => {
-        async function loadContainers() {
-            try {
-                setLoading(true);
-                const response = await api.getContainers();
-                setContainers(response);
-                setError(false);
-            } catch (err) {
-                console.log(err);
-                setError(true);
-            } finally {
-                setLoading(false);
-            }
-        }
-        loadContainers();
+        const stopPolling = pollingFunction(
+        api.getContainers, // function to call
+        (data) => setContainers(data), // what to do with response
+        5000 // interval
+        );
+
+        return () => {
+        stopPolling(); // cleanup when component unmounts
+        };
     }, []);
 
     if (loading) {

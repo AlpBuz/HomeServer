@@ -15,6 +15,27 @@ async function request(path, options = {}) {
   return text ? JSON.parse(text) : null;
 }
 
+export function pollingFunction(fetchFunction, onData, interval = 5000) {
+  let timer;
+
+  const poll = async () => {
+    try {
+      const data = await fetchFunction();
+      onData(data);
+    } catch (err) {
+      console.log(err);
+    }
+
+    timer = setTimeout(poll, interval);
+  };
+
+  poll();
+
+  return () => clearTimeout(timer);
+}
+
+
+
 export const api = {
   getSystemInfo: () => request("/system/info", {method: "GET"}),
   getSystemMetrics: () => request("/system/metrics", {method: "GET"}),
