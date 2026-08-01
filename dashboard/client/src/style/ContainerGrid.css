@@ -1,6 +1,5 @@
 .container-panel {
     border: 1px solid var(--page_bg);
-    border-left: 3px solid var(--border);
     background-color: var(--card-bg);
     border-radius: var(--borderRadius);
     padding: 15px;

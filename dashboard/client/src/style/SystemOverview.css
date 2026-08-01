@@ -12,6 +12,7 @@
 .stat-card {
   background: var(--card-bg);
   border-radius: var(--borderRadius);
+  border-left: 3px solid var(--border);
   padding: var(--padding);
 }
 .stat-label {
