@@ -71,29 +71,23 @@ function SystemOverview () {
 
     // fetching the serverInfo once
     useEffect(() => {
-        let isMounted = true;
-
         async function fetchData(apiCall, setState) {
             try {
                 const response = await apiCall();
-                if (isMounted) setState(response);
+                setState(response);
             } catch (err) {
                 console.error(err);
-                if (isMounted) setError(true);
+                setError(true);
             }
         }
 
         fetchData(api.getSystemInfo, setServerInfo);
-
-        return () => {
-            isMounted = false;
-        };
     }, []);
 
     useEffect(() => {
         const stopPolling = pollingFunction(
-        api.getSystemMetrics, // function to call
-        (data) => setMetricsInfo(data), // what to do with response
+        api.getSystemMetrics,
+        (data) => setMetricsInfo(data),
         5000 // interval
         );
 

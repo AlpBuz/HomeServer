@@ -24,15 +24,27 @@
 /* Container Card Styling */
 .Container-Card {
     display: grid;
-    grid-template-areas:"CardInfo" "Actions";
-    grid-template-columns: auto auto;
-    border: solid 2px;
+    grid-template-areas: "CardInfo Actions";
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    border: 2px solid var(--container-card-bg);
     border-radius: var(--borderRadius);
     padding: 10px;
 }
 
 .Card-Info {
     grid-area: CardInfo;
+    border-left: 4px solid var(--border);
+    border-radius: var(--borderRadius);
+    padding: var(--padding);
+}
+
+
+.Container-state {
+    background: #004d00;
+    display: inline;
+    padding: 6px;
+    border-radius: var(--borderRadius);
 }
 
 .container-Actions {
@@ -66,8 +78,11 @@
 }
 
 .container-button {
+    display: flex;
+    gap: 10px;
     background: none;
     color: ghostwhite;
+    border: 1px solid var(--container-buttons-bg);
     border-radius: var(--borderRadius);
     padding: 8px;
 }

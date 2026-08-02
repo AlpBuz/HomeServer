@@ -1,7 +1,9 @@
 :root {
     --sidebar-bg: #191a20;
-    --page-bg: #14151a;
+    --page-bg: #dae1e7;
     --card-bg: #1c1e25;
+    --container-card-bg: #1c1e25;
+    --container-buttons-bg: #1c1e25;
     --border: #4ea1ff;
     --stat-labels: #6c6f7a; 
     --text-primary: ghostwhite;
