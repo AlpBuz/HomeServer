@@ -64,38 +64,9 @@ function SystemViewSection ({info, metrics}) {
 }
 
 
-function SystemOverview () {
-    const [serverInfo, setServerInfo] = useState({});
-    const [metricsInfo, setMetricsInfo] = useState({});
-    const [error, setError] = useState(false);
-
-    // fetching the serverInfo once
-    useEffect(() => {
-        async function fetchData(apiCall, setState) {
-            try {
-                const response = await apiCall();
-                setState(response);
-            } catch (err) {
-                console.error(err);
-                setError(true);
-            }
-        }
-
-        fetchData(api.getSystemInfo, setServerInfo);
-    }, []);
-
-    useEffect(() => {
-        const stopPolling = pollingFunction(
-        api.getSystemMetrics,
-        (data) => setMetricsInfo(data),
-        5000 // interval
-        );
-
-        return () => {
-        stopPolling(); // cleanup when component unmounts
-        };
-    }, []);
-    
+function SystemOverview ({serverInfo, metricsInfo, error}) {
+    console.log(serverInfo);
+    console.log(metricsInfo);
     return (
         <section className="System-panel">
             <SystemViewSection info={serverInfo} metrics={metricsInfo} />

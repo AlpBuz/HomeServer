@@ -102,31 +102,7 @@ function ContainerCard({ containerID, name, state, status }) {
 
 
 
-function ContainerGrid() {
-    const [containers, setContainers] = useState([]); // will contain the list of containers
-    const [error, setError] = useState(false); // flag to set for any errors that happens
-    const [loading, setLoading] = useState(false); // flag if it is currently loading
-
-    useEffect(() => {
-        const stopPolling = pollingFunction(
-        api.getContainers, // function to call
-        (data) => setContainers(data), // what to do with response
-        5000 // interval
-        );
-
-        return () => {
-        stopPolling(); // cleanup when component unmounts
-        };
-    }, []);
-
-    if (loading) {
-        return (
-            <section>
-                <p>Loading...</p>
-            </section>
-        )
-    }
-
+function ContainerGrid({containers, error}) {
     if (error) {
         return(
             <section>
