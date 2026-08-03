@@ -5,6 +5,7 @@
     grid-template-columns: auto 1fr;
     grid-template-areas: "sidebar main";
     min-height: 100vh;
+    padding: 5px;
 }
 
 .homeserver-sidebar {
