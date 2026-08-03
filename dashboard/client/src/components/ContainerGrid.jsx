@@ -14,6 +14,8 @@ function ContainerCard({ containerID, name, state, status }) {
     const fadeTimer = useRef(null);
     const removeTimer = useRef(null);
 
+
+
     useEffect(() => {
         return () => {
             clearTimeout(fadeTimer.current);
@@ -65,7 +67,7 @@ function ContainerCard({ containerID, name, state, status }) {
     }
 
     return (
-        <li className="Container-Card">
+        <li className={`Container-Card ${state}`}>
             <div className="Card-Info">
                 <div>
                     <p className="Container-Name">Name: {name}</p>

@@ -1,65 +1,194 @@
+/* ------------------------- */
+/* Container Panel */
+/* ------------------------- */
+
 .container-panel {
-    border: 1px solid var(--page_bg);
-    background-color: var(--card-bg);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: var(--borderRadius);
-    padding: 15px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
 }
 
 .panel-title {
-    border-bottom: solid 2px var(--border);
-    padding: 2px;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.2rem;
+    font-weight: 600;
 }
+
+/* ------------------------- */
+/* List */
+/* ------------------------- */
 
 .container-list {
-    max-height: 400px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
+
+    list-style: none;
+
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 10px;
+    margin: 0;
 }
 
+/* Nice scrollbar */
 
-/* Container Card Styling */
+.container-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container-list::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 20px;
+}
+
+/* ------------------------- */
+/* Container Card */
+/* ------------------------- */
+
 .Container-Card {
     display: grid;
-    grid-template-areas: "CardInfo Actions";
     grid-template-columns: 1fr auto;
     align-items: center;
-    border: 2px solid var(--container-card-border);
+
+    padding: 18px;
+
+    background: rgba(255,255,255,0.02);
+
+    border: 1px solid var(--container-card-border);
+    border-left: 5px solid var(--border);
+
     border-radius: var(--borderRadius);
-    padding: 10px;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+    box-shadow: var(--card-shadow);
 }
+
+.Container-Card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* ------------------------- */
+/* Running */
+/* ------------------------- */
+
+.running {
+    border-left-color: var(--success);
+    animation: runningPulse 2.5s infinite;
+}
+
+@keyframes runningPulse {
+
+    0%,100%{
+        box-shadow:
+            0 0 0 rgba(40,167,69,.1);
+    }
+
+    50%{
+        box-shadow:
+            0 0 15px rgba(40,167,69,.35);
+    }
+}
+
+/* ------------------------- */
+/* Exited */
+/* ------------------------- */
+
+.exited {
+    border-left-color: var(--danger);
+    animation: exitedPulse 1.4s infinite;
+}
+
+@keyframes exitedPulse {
+
+    0%,100%{
+        box-shadow:
+            0 0 0 rgba(220,53,69,.1);
+    }
+
+    50%{
+        box-shadow:
+            0 0 18px rgba(220,53,69,.45);
+    }
+}
+
+/* ------------------------- */
+/* Card Info */
+/* ------------------------- */
 
 .Card-Info {
-    grid-area: CardInfo;
-    border-left: 4px solid var(--border);
-    border-radius: var(--borderRadius);
-    padding: var(--padding);
-}
-
-
-.Container-state {
-    background: #004d00;
-    display: inline;
-    padding: 6px;
-    border-radius: var(--borderRadius);
-}
-
-.container-Actions {
-    grid-area: Actions;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 6px;
 }
 
-.action-message {
-    color: #28a745;
+.Card-Info h3 {
+    margin: 0;
+    font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 12px;
+}
+
+.Card-Info p {
+    margin: 0;
+    color: #999;
+    font-size: .9rem;
+}
+
+/* ------------------------- */
+/* Status Badge */
+/* ------------------------- */
+
+.Container-state {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+
+    padding: 4px 10px;
+
+    border-radius: 999px;
+
+    font-size: .8rem;
+    font-weight: 600;
+
+    letter-spacing: .5px;
+
+    color: white;
+}
+
+/* ------------------------- */
+/* Actions */
+/* ------------------------- */
+
+.container-Actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+/* ------------------------- */
+/* Messages */
+/* ------------------------- */
+
+.action-message {
+    color: #4ade80;
+    font-weight: 600;
+
     opacity: 1;
-    transition: opacity 0.5s ease;
+
+    transition: opacity .4s ease;
 }
 
 .action-message.fade-out {
@@ -67,10 +196,13 @@
 }
 
 .error-message {
-    color: #dc3545;
+    color: #ff6b6b;
     font-weight: 600;
-    margin-bottom: 12px;
 }
+
+/* ------------------------- */
+/* Buttons */
+/* ------------------------- */
 
 .buttons {
     display: flex;
@@ -79,11 +211,33 @@
 
 .container-button {
     display: flex;
-    gap: 10px;
-    background: none;
-    color: ghostwhite;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    background: rgba(255,255,255,.03);
+
     border: 1px solid var(--container-buttons-border);
+
     border-radius: var(--borderRadius);
-    padding: 8px;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
 }
 
+.container-button:hover {
+    background: rgba(255,255,255,.08);
+    border-color: var(--border);
+    transform: translateY(-2px);
+}
+
+.container-button:active {
+    transform: translateY(0);
+}
