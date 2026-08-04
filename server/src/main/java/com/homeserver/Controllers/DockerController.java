@@ -20,10 +20,10 @@ public class DockerController {
         this.dockerService = dockerService;
     }
 
-    @GetMapping("/getContainers")
-    public List<ContainerInfo> status() {
-        return dockerService.getContainers();
-    }
+    // @GetMapping("/getContainers")
+    // public List<ContainerInfo> status() {
+    //     return dockerService.getContainers();
+    // }
 
     @GetMapping("/getApplications")
     public List<ContainerInfo> getApplications() {

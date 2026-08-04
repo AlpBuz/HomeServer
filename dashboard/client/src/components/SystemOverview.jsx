@@ -65,8 +65,6 @@ function SystemViewSection ({info, metrics}) {
 
 
 function SystemOverview ({serverInfo, metricsInfo, error}) {
-    console.log(serverInfo);
-    console.log(metricsInfo);
     return (
         <section className="System-panel">
             <SystemViewSection info={serverInfo} metrics={metricsInfo} />

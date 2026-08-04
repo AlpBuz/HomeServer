@@ -8,6 +8,10 @@
     border-radius: var(--borderRadius);
     padding: 20px;
     box-shadow: var(--card-shadow);
+    max-height: 370px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .panel-title {
@@ -240,4 +244,44 @@
 
 .container-button:active {
     transform: translateY(0);
+}
+
+
+/* ------------------------- */
+/* Container grid error message */
+/* ------------------------- */
+.container-grid-error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+}
+
+.container-grid-error-message {
+    color: #b91c1c;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ------------------------- */
+/* no containers where found message */
+/* ------------------------- */
+
+.container-grid-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.container-grid-empty-message {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin: 0;
 }

@@ -40,7 +40,7 @@ function App() {
   // getting the container information with this polling
   useEffect(() => {
     const stopPolling = pollingFunction(
-    api.getContainers, // function to call
+    api.getApplicationContainers, // function to call
     (data) => setContainers(data), // what to do with response
     5000 // interval
     );

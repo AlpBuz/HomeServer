@@ -105,16 +105,16 @@ function ContainerCard({ containerID, name, state, status }) {
 function ContainerGrid({containers, error}) {
     if (error) {
         return(
-            <section>
-                <p>An Error has occured when fetching the containers</p>
+            <section className="container-grid-error">
+                <p className="container-grid-error-message">An error occurred while fetching the containers</p>
             </section>
         )
     }
 
     if (containers.length === 0) {
         return(
-            <section>
-                <p>No containers has been found</p>
+            <section className="container-grid-empty">
+                <p className="container-grid-empty-message">No containers found</p>
             </section>
         )
     }
