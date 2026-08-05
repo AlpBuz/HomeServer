@@ -10,11 +10,6 @@ import './style/App.css'
 // Will need to add authentication soon but later.
 function App() {
 
-  useEffect(() => {
-    const clockId = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(clockId);
-  }, []);
-
   const date = getDate();
   const time = getTime();
 

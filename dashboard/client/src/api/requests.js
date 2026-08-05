@@ -1,6 +1,7 @@
 const BASE = "/api";
 
 async function request(path, options = {}) {
+  // calls the api and returns the data, no polling happens here
   const res = await fetch(`${BASE}${path}`, {
     headers: { "Content-Type": "application/json" },
     ...options,
@@ -16,17 +17,17 @@ async function request(path, options = {}) {
 }
 
 export function pollingFunction(fetchFunction, onData, interval = 5000) {
-  let timer;
+  let timer; // variable that stores the timer ID
 
-  const poll = async () => {
+  async function poll () { // the function that calls the fetch of the api endpoint and runs the loop
     try {
       const data = await fetchFunction();
       onData(data);
-    } catch (err) {
-      console.log(err);
+    }catch (error){
+      console.log(error);
     }
 
-    timer = setTimeout(poll, interval);
+    timer = setTimeout(poll, interval); // the timeout that recalls the poll function
   };
 
   poll();

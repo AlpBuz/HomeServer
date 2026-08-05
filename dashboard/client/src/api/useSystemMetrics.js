@@ -7,28 +7,16 @@ export function useSystemMetrics() {
 
   const stopPollingRef = useRef(null);
 
-  const fetchMetrics = useCallback(async () => {
-    try {
-      const data = await api.getSystemMetrics();
-      setMetricsInfo(data);
-      setError(false);
-    } catch (err) {
-      console.error(err);
-      setError(true);
-      stopPollingRef.current?.();
-    }
-  }, []);
-
   useEffect(() => {
-    stopPollingRef.current = pollingFunction(fetchMetrics, () => {}, 5000);
+    stopPollingRef.current = pollingFunction(api.getSystemMetrics, setMetricsInfo, 5000);
     return () => stopPollingRef.current?.();
-  }, [fetchMetrics]);
+  }, []);
 
   const retry = useCallback(() => {
     stopPollingRef.current?.();
-    fetchMetrics();
-    stopPollingRef.current = pollingFunction(fetchMetrics, () => {}, 5000);
-  }, [fetchMetrics]);
+    setMetricsInfo(fetchMetrics());
+    stopPollingRef.current = pollingFunction(api.getSystemMetrics, setMetricsInfo, 5000);
+  }, []);
 
   return { metricsInfo, error, retry };
 }
