@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { api, pollingFunction } from "../api/requests";
+import { useSystemInfo } from '../api/useSystemInfo'
+import { useSystemMetrics } from '../api/useSystemMetrics'
 import "../style/SystemOverview.css";
 
 function CpuInfoCard ({ info }) {
@@ -64,7 +66,10 @@ function SystemViewSection ({info, metrics}) {
 }
 
 
-function SystemOverview ({serverInfo, metricsInfo, error}) {
+function SystemOverview () {
+    const { serverInfo, error: infoError } = useSystemInfo();
+    const { metricsInfo, error: metricsError, retry } = useSystemMetrics();
+
     return (
         <section className="System-panel">
             <SystemViewSection info={serverInfo} metrics={metricsInfo} />

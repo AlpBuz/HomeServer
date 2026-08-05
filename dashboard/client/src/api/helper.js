@@ -3,8 +3,6 @@ export function getDate () {
     return `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`;
 }
 
-
-
 export function getTime() {
     const now = new Date();
 

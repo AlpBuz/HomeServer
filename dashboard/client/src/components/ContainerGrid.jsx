@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FaPlay, FaStop, FaRedo } from "react-icons/fa";
 import { api, pollingFunction } from "../api/requests";
+import { getContainers } from "../api/getContainers"
 const ACTIONS = ["Start", "Stop", "Restart"];
 import "../style/ContainerGrid.css";
 
@@ -102,7 +103,9 @@ function ContainerCard({ containerID, name, state, status }) {
 
 
 
-function ContainerGrid({containers, error, retryPolling}) {
+function ContainerGrid() {
+    const {containers, error, retryPolling} = getContainers();
+
     if (error) {
         return(
             <section className="container-grid-error">
