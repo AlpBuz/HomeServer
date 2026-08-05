@@ -272,6 +272,7 @@
 .container-grid-empty {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     align-items: center;
     justify-content: center;
     padding: 3rem 1.5rem;
@@ -280,8 +281,40 @@
     text-align: center;
 }
 
+.container-grid-error {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    border: 1px dashed var(--danger);
+    border-radius: 8px;
+    text-align: center;
+}
+
 .container-grid-empty-message {
     color: #6b7280;
     font-size: 0.95rem;
     margin: 0;
+}
+
+
+.retry-button {
+    background: none;
+    color: ghostwhite;
+    border: 1px dashed var(--border);
+    border-radius: var(--borderRadius);
+    padding: 10px;
+
+    transition: 
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+.retry-button:hover {
+    background: rgba(255,255,255,.08);
+    border-color: var(--border);
+    transform: translateY(-2px);
 }

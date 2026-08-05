@@ -102,11 +102,12 @@ function ContainerCard({ containerID, name, state, status }) {
 
 
 
-function ContainerGrid({containers, error}) {
+function ContainerGrid({containers, error, retryPolling}) {
     if (error) {
         return(
             <section className="container-grid-error">
                 <p className="container-grid-error-message">An error occurred while fetching the containers</p>
+                <button className="retry-button" onClick={retryPolling}>Retry request</button>
             </section>
         )
     }
@@ -115,6 +116,7 @@ function ContainerGrid({containers, error}) {
         return(
             <section className="container-grid-empty">
                 <p className="container-grid-empty-message">No containers found</p>
+                <button className="retry-button" onClick={retryPolling}>Retry request</button>
             </section>
         )
     }

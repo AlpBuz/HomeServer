@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import ContainerGrid from './components/ContainerGrid'
 import ServiceLinks from './components/ServiceLinks'
 import SystemOverview from './components/SystemOverview'
@@ -14,55 +14,88 @@ function App() {
   const [metricsInfo, setMetricsInfo] = useState({});
   const [systemOverviewError, setSystemOverviewError] = useState(false);
 
-
   // ContainerGrid information is stored here
-  const [containers, setContainers] = useState([]); // will contain the list of containers
-  const [containerError, setContainerError] = useState(false); // flag to set for any errors that happens
-  const [loading, setLoading] = useState(false); // flag if it is currently loading
+  const [containers, setContainers] = useState([]);
+  const [containerError, setContainerError] = useState(false);
 
+
+  // refs to hold the "stop polling" functions returned by pollingFunction,
+  // so an error handler or the retry button can call them directly
+  const stopContainerPollingRef = useRef(null);
+  const stopMetricsPollingRef = useRef(null);
+
+  useEffect(() => {
+    const clockId = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(clockId);
+  }, []);
 
   // fetch information that only needs to be obtained once
   useEffect(() => {
     async function fetchData(apiCall, setState) {
-        try {
-            const response = await apiCall();
-            setState(response);
-        } catch (err) {
-            console.error(err);
-            setSystemOverviewError(true);
-        }
+      try {
+        const response = await apiCall();
+        setState(response);
+      } catch (err) {
+        console.error(err);
+        setSystemOverviewError(true);
+      }
     }
 
     fetchData(api.getSystemInfo, setServerInfo);
   }, []);
 
-  // other informations that are fetched each polling
+  // container fetch, reusable so the retry button can call it directly
+  const fetchContainers = useCallback(async () => {
+    try {
+      const data = await api.getApplicationContainers();
+      setContainers(data);
+      setContainerError(false);
+    } catch (err) {
+      console.error(err);
+      setContainerError(true);
+      // stop polling as soon as we hit an error
+      stopContainerPollingRef.current?.();
+    }
+  }, []);
+
+  // metrics fetch, reusable for the same reason
+  const fetchMetrics = useCallback(async () => {
+    try {
+      const data = await api.getSystemMetrics();
+      setMetricsInfo(data);
+      setSystemOverviewError(false);
+    } catch (err) {
+      console.error(err);
+      setSystemOverviewError(true);
+      stopMetricsPollingRef.current?.();
+    }
+  }, []);
 
   // getting the container information with this polling
   useEffect(() => {
-    const stopPolling = pollingFunction(
-    api.getApplicationContainers, // function to call
-    (data) => setContainers(data), // what to do with response
-    5000 // interval
-    );
+    stopContainerPollingRef.current = pollingFunction(fetchContainers, () => {}, 5000);
+    return () => stopContainerPollingRef.current?.();
+  }, [fetchContainers]);
 
-    return () => {
-    stopPolling(); // cleanup when component unmounts
-    };
-  }, []);
-
-  //getting the system metrics with this polling
+  // getting the system metrics with this polling
   useEffect(() => {
-    const stopPolling = pollingFunction(
-    api.getSystemMetrics, // function to call
-    (data) => setMetricsInfo(data), // what to do with response
-    5000 // interval
-    );
+    stopMetricsPollingRef.current = pollingFunction(fetchMetrics, () => {}, 5000);
+    return () => stopMetricsPollingRef.current?.();
+  }, [fetchMetrics]);
 
-    return () => {
-    stopPolling(); // cleanup when component unmounts
-    };
-  }, []);
+  // retrying the polling if the polling fails for some reason
+  const retryContainerPolling = useCallback(() => {
+    // in case a stale poller is somehow still running, stop it first
+    stopContainerPollingRef.current?.();
+    fetchContainers(); // immediate refetch
+    stopContainerPollingRef.current = pollingFunction(fetchContainers, () => {}, 5000);
+  }, [fetchContainers]);
+
+  const retryMetricsPolling = useCallback(() => {
+    stopMetricsPollingRef.current?.();
+    fetchMetrics();
+    stopMetricsPollingRef.current = pollingFunction(fetchMetrics, () => {}, 5000);
+  }, [fetchMetrics]);
 
   const date = getDate();
   const time = getTime();
@@ -77,11 +110,19 @@ function App() {
         </div>
       </header>
       <main className='homeserver-main'>
-        <SystemOverview serverInfo={serverInfo} metricsInfo={metricsInfo} error={systemOverviewError} /> 
+        <SystemOverview
+          serverInfo={serverInfo}
+          metricsInfo={metricsInfo}
+          error={systemOverviewError}
+        />
 
         <div className="features-panel">
           <ServiceLinks />
-          <ContainerGrid containers={containers} error={containerError} />
+          <ContainerGrid
+            containers={containers}
+            error={containerError}
+            retryPolling={retryContainerPolling}
+          />
         </div>
       </main>
     </div>
