@@ -1,20 +1,22 @@
-.system-panel {
-    display: grid;
-    grid-template-rows: auto auto;
+.System-panel {
+    display: flex;
+    justify-content: space-between;
 }
 
-.stat-grid {
+/* .stat-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-}
+} */
 
 .stat-card {
   background: var(--card-bg);
   border-radius: var(--borderRadius);
-  border-left: 3px solid var(--border);
+  border: 1px solid var(--border);
   padding: var(--padding);
 }
+
+
 .stat-label {
   color: var(--stat-labels);
   font-size: 10px;

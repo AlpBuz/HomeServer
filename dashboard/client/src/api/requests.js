@@ -2,10 +2,7 @@ const BASE = "/api";
 
 async function request(path, options = {}) {
   // calls the api and returns the data, no polling happens here
-  const res = await fetch(`${BASE}${path}`, {
-    headers: { "Content-Type": "application/json" },
-    ...options,
-  });
+  const res = await fetch(`${BASE}${path}`, {headers: { "Content-Type": "application/json" }, ...options,});
 
   if (!res.ok) {
     const body = await res.text().catch(() => "");

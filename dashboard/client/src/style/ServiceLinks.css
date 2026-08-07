@@ -1,4 +1,5 @@
 .ServiceLinks-panel {
+    grid-area: services;
     border: 1px solid var(--page-bg);
     background-color: var(--card-bg);
     border-radius: var(--borderRadius);

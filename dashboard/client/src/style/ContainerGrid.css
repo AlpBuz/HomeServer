@@ -3,6 +3,7 @@
 /* ------------------------- */
 
 .container-panel {
+    grid-area: containers;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--borderRadius);

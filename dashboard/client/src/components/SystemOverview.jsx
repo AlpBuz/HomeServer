@@ -53,17 +53,17 @@ function MemoryUsuageCard ({ metrics }) {
 }
 
 
-function SystemViewSection ({info, metrics}) {
-    return (
-        <div className="stat-grid">
-            <CpuUsuageCard metrics={metrics} />
-            <MemoryUsuageCard metrics={metrics} />
-            <CpuInfoCard info={info} />
-            <MemoryInfoCard info={info} />
-        </div>
-    )
+// function SystemViewSection ({info, metrics}) {
+//     return (
+//         <div className="stat-grid">
+//             <CpuUsuageCard metrics={metrics} />
+//             <MemoryUsuageCard metrics={metrics} />
+//             <CpuInfoCard info={info} />
+//             <MemoryInfoCard info={info} />
+//         </div>
+//     )
 
-}
+// }
 
 
 function SystemOverview () {
@@ -72,7 +72,10 @@ function SystemOverview () {
 
     return (
         <section className="System-panel">
-            <SystemViewSection info={serverInfo} metrics={metricsInfo} />
+            <CpuUsuageCard metrics={metricsInfo} />
+            <MemoryUsuageCard metrics={metricsInfo} />
+            <CpuInfoCard info={serverInfo} />
+            <MemoryInfoCard info={serverInfo} />
         </section>
     )
 }
