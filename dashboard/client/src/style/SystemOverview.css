@@ -1,13 +1,9 @@
 .System-panel {
-    display: flex;
-    justify-content: space-between;
-}
-
-/* .stat-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-} */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    width: 100%;
+}
 
 .stat-card {
   background: var(--card-bg);
