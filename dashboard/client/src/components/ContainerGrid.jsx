@@ -15,7 +15,7 @@ function ContainerCard({ containerID, name, state, status }) {
     const fadeTimer = useRef(null);
     const removeTimer = useRef(null);
 
-
+    const [currentState, setCurrentState] = useState(state)
 
     useEffect(() => {
         return () => {
@@ -40,8 +40,10 @@ function ContainerCard({ containerID, name, state, status }) {
             return;
         }
 
+
         try {
             const { message } = await actionFunction(containerID);
+
 
             // Cancel any previous timers
             clearTimeout(fadeTimer.current);
@@ -65,6 +67,18 @@ function ContainerCard({ containerID, name, state, status }) {
             console.error(err);
             setError(true);
         }
+    }
+
+    function StartButton() {
+        return(
+            <button className="container-button start-button" onClick={() => buttonAction("Start")}> <span className="button-icon"><FaPlay /></span></button>
+        )
+    }
+
+    function StopButton() {
+        return (
+            <button className="container-button stop-button" onClick={() => buttonAction("Stop")}> <span className="button-icon"><FaStop /></span></button>
+        )
     }
 
     return (
@@ -92,9 +106,8 @@ function ContainerCard({ containerID, name, state, status }) {
                 )}
 
                 <div className="buttons">
-                    <button className="container-button" onClick={() => buttonAction("Start")}> <span className="button-icon"><FaPlay /></span> Start</button>
-                    <button className="container-button" onClick={() => buttonAction("Stop")}> <span className="button-icon"><FaStop /></span> Stop</button>
-                    <button className="container-button" onClick={() => buttonAction("Restart")}><span className="button-icon"><FaRedo /></span> Restart</button>
+                    {state == "running" ? <StopButton /> : <StartButton />}
+                    <button className="container-button" onClick={() => buttonAction("Restart")}><span className="button-icon"><FaRedo /></span></button>
                 </div>
             </div>
         </li>
