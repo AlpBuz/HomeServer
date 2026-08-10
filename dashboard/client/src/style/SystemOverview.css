@@ -6,7 +6,7 @@
 }
 
 .stat-card {
-  background: var(--card-bg);
+  background: var(--surface);
   border-radius: var(--borderRadius);
   border: 1px solid var(--border);
   padding: var(--padding);
@@ -21,14 +21,14 @@
   margin: 0 0 6px;
 }
 .stat-value {
-  color: var(--text-primary);
+  color: var(--text);
   font-size: 20px;
   font-weight: 500;
   margin: 0;
 }
 
 .stat-subtext {
-  color: var(--text-secondary);
+  color: var(--muted);
 }
 
 
@@ -41,5 +41,5 @@
 }
 .stat-bar-fill {
   height: 100%;
-  background: #6ee7c9;
+  background: var(--green);
 }

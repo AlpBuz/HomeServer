@@ -11,6 +11,34 @@ import './style/App.css'
 function App() {
   const date = getDate();
   const time = getTime();
+  const [currentTheme, setCurrentTheme] = useState('dark-theme')
+
+
+  // button function for switching between light mode and dark mode
+  function switchTheme () {
+    if (currentTheme == 'dark-theme'){
+      // switch to light mode
+      setCurrentTheme("light-theme");
+      document.documentElement.setAttribute("data-theme", "light-theme");
+    }else{
+      // switching to dark mode
+      setCurrentTheme("dark-theme");
+      document.documentElement.setAttribute("data-theme", "dark-theme");
+    }
+  }
+
+
+  function LightButton () {
+    return (
+      <button className='theme-button' onClick={switchTheme}>&#x2600; Light</button>
+    )
+  }
+
+  function DarkButton () {
+    return(
+      <button className='theme-button' onClick={switchTheme}>&#x263E; Dark</button>
+    )
+  }
 
   return (
     <div className="homeserver">
@@ -22,6 +50,7 @@ function App() {
         </div>
 
         <div className='date-time'>
+          {currentTheme == 'dark-theme' ? <DarkButton /> : <LightButton />}
           <p className='p-time'>{time}</p>
           <p className='p-date'>{date}</p>
         </div>

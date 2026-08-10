@@ -10,8 +10,8 @@
 
 /* The header CSS is stored here */
 .homeserver-sidebar {
-    color: var(--sidebar-color);
-    background: var(--sidebar-bg);
+    color: var(--text);
+    background: var(--surface);
     display: flex;
     justify-content: space-between;
     padding: 2px;
@@ -34,21 +34,22 @@
 }
 
 .homeserver-name p{
-    color: #627a96;
+    color: var(--muted);
 }
 
 .homeserver-name span{
-    color: #627a96;
+    color: var(--muted);
 }
 
 .date-time{
-    color: #627a96;
+    color: var(--muted);
     display: flex;
+    align-items: center;
     gap: 10px;
 }
 
 .p-time{
-    color: #00d4ff;
+    color: var(--cyan);
 }
 /* -------------------------------------- */
 
@@ -66,4 +67,13 @@
     grid-template-areas: "services services containers";
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+}
+
+
+.theme-button {
+    background: var(--surface-2);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px 15px;
 }

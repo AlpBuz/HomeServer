@@ -4,7 +4,7 @@
 
 .container-panel {
     grid-area: containers;
-    background: var(--card-bg);
+    background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--borderRadius);
     padding: 20px;
@@ -66,7 +66,7 @@
 
     background: rgba(255,255,255,0.02);
 
-    border: 1px solid var(--container-card-border);
+    border: 1px solid var(--border);
     border-left: 5px solid var(--border);
 
     border-radius: var(--borderRadius);
@@ -89,7 +89,7 @@
 /* ------------------------- */
 
 .running {
-    border-left-color: var(--success);
+    border-left-color: var(--green);
     animation: runningPulse 2.5s infinite;
 }
 
@@ -111,7 +111,7 @@
 /* ------------------------- */
 
 .exited {
-    border-left-color: var(--danger);
+    border-left-color: var(--red);
     animation: exitedPulse 1.4s infinite;
 }
 
@@ -138,15 +138,9 @@
     gap: 6px;
 }
 
-.Card-Info h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
 .Card-Info p {
     margin: 0;
-    color: #999;
+    color: var(--muted);
     font-size: .9rem;
 }
 
@@ -169,7 +163,7 @@
 
     letter-spacing: .5px;
 
-    color: white;
+    color: var(--text);
 }
 
 /* ------------------------- */
@@ -188,7 +182,7 @@
 /* ------------------------- */
 
 .action-message {
-    color: #4ade80;
+    color: var(--green);
     font-weight: 600;
 
     opacity: 1;
@@ -201,7 +195,7 @@
 }
 
 .error-message {
-    color: #ff6b6b;
+    color: var(--red);
     font-weight: 600;
 }
 
@@ -214,20 +208,21 @@
     gap: 8px;
 }
 
-.container-button {
+.restart-button {
+
     display: flex;
     align-items: center;
     gap: 8px;
 
     padding: 10px 14px;
 
-    background: rgba(255,255,255,.03);
+    background: var(--restart-bg);
 
-    border: 1px solid var(--container-buttons-border);
+    border: 1px solid var(--restart-border);
 
     border-radius: var(--borderRadius);
 
-    color: white;
+    color: var(--text);
 
     cursor: pointer;
 
@@ -237,23 +232,25 @@
         transform .2s ease;
 }
 
-.container-button:hover {
+.restart-button:hover {
     border-color: var(--border);
     transform: translateY(-2px);
 }
 
-.container-button:active {
+.restart-button:active {
     transform: translateY(0);
 }
 
 .start-button{
-    background-color: #0d2a1a;
-    color: #22c55e;
+    background-color: var(--start-bg);
+    color: var(--green);
+    border: 1px solid var(--start-border);
 }
 
 .stop-button{
-    background-color: #2a0d0d;
-    color: #ef4444;
+    background-color: var(--stop-bg);
+    color: var(--red);
+    border: 1px solid var(--stop-border);
 }
 
 
@@ -269,7 +266,7 @@
 }
 
 .container-grid-error-message {
-    color: #b91c1c;
+    color: var(--red);
     font-size: 0.95rem;
     font-weight: 500;
     margin: 0;
@@ -304,7 +301,7 @@
 }
 
 .container-grid-empty-message {
-    color: #6b7280;
+    color: var(--muted);
     font-size: 0.95rem;
     margin: 0;
 }
@@ -313,7 +310,7 @@
 .retry-button {
     background: none;
     color: ghostwhite;
-    border: 1px dashed var(--border);
+    border: 1px dashed var(--restart-bg);
     border-radius: var(--borderRadius);
     padding: 10px;
 
@@ -325,6 +322,6 @@
 
 .retry-button:hover {
     background: rgba(255,255,255,.08);
-    border-color: var(--border);
+    border-color: var(--restart-border);
     transform: translateY(-2px);
 }

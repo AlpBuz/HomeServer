@@ -107,7 +107,7 @@ function ContainerCard({ containerID, name, state, status }) {
 
                 <div className="buttons">
                     {state == "running" ? <StopButton /> : <StartButton />}
-                    <button className="container-button" onClick={() => buttonAction("Restart")}><span className="button-icon"><FaRedo /></span></button>
+                    <button className="restart-button" onClick={() => buttonAction("Restart")}><span className="button-icon"><FaRedo /></span></button>
                 </div>
             </div>
         </li>

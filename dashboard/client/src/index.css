@@ -1,30 +1,60 @@
+
 :root {
-    --sidebar-bg: #0e1520;
-    --page-bg: #080c12;
-    --card-bg: #0e1520;
-    --container-card-bg: #1c1e25;
-    --container-buttons-bg: #1c1e25;
-    --border: #1e2d42;
-    --container-card-border: #1c1e25;
-    --container-buttons-border: #1c1e25;
-    --stat-labels: #6c6f7a;
-    --text-primary: #e2eaf4;
-    --sidebar-color: #e2eaf4;
-    --text-secondary: #8b949e;
-    --accent: #58a6ff;
-    --success: #3fb950;
-    --warning: #d29922;
-    --danger: #f85149;
+    --bg:          #080c12;
+    --surface:     #0e1520;
+    --surface-2:   #141d2b;
+    --border:      #1e2d42;
+    --text:        #e2eaf4;
+    --muted:       #627a96;
+    --dim:         #3d556e;
+    --cyan:        #00d4ff;
+    --green:       #22c55e;
+    --amber:       #f59e0b;
+    --red:         #ef4444;
+    --start-bg:    #0d2a1a;
+    --start-border:#164d29;
+    --stop-bg:     #2a0d0d;
+    --stop-border: #4d1616;
+    --restart-bg:  #141d2b;
+    --restart-border:#1e2d42;
+    --toast-bg:    #0e1520;
+    --card-hover:  #111d2e;
+
+    
     --borderRadius: 10px;
     --padding: 20px;
     --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
+
+
+[data-theme="light-theme"] {
+    --bg:            #eef3fa;
+    --surface:       #ffffff;
+    --surface-2:     #e4ecf5;
+    --border:        #c5d5e8;
+    --text:          #0d1b2e;
+    --muted:         #5a728a;
+    --dim:           #8aa2bc;
+    --cyan:          #0284c7;
+    --green:         #16a34a;
+    --amber:         #d97706;
+    --red:           #dc2626;
+    --start-bg:      #dcfce7;
+    --start-border:  #86efac;
+    --stop-bg:       #fee2e2;
+    --stop-border:   #fca5a5;
+    --restart-bg:    #e4ecf5;
+    --restart-border:#c5d5e8;
+    --toast-bg:      #ffffff;
+    --card-hover:    #f4f8ff;
+}
+
 body {
     margin: 0;
-    background: var(--page-bg);
-    color: var(--text-primary);
+    background: var(--bg);
+    color: var(--text);
     font-family: -apple-system, "Segoe UI", sans-serif;
 }
 
