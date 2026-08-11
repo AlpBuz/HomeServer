@@ -96,12 +96,12 @@
     grid-template-columns: 1fr auto;
     align-items: center;
 
-    padding: 18px;
+    padding: 5px 10px;
 
     background: var(--surface);
 
     border: 1px solid var(--border);
-    border-left: 5px solid var(--border);
+    border-left: 2px solid var(--border);
 
     border-radius: var(--borderRadius);
 
@@ -172,10 +172,24 @@
     gap: 6px;
 }
 
-.Card-Info p {
+.Container-Name {
     margin: 0;
+    font-size: 12px;
+    color: var(--text);
+}
+
+.Container-Status {
+    margin: 0;
+    font-size: 10px;
     color: var(--muted);
-    font-size: .9rem;
+}
+
+.on {
+    color: var(--green);
+}
+
+.off {
+    color: var(--red);
 }
 
 /* ------------------------- */
@@ -246,17 +260,17 @@
 
     display: flex;
     align-items: center;
-    gap: 8px;
-
-    padding: 10px 14px;
 
     background: var(--restart-bg);
 
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 10px;
+    font-weight: 500;
+
+    padding: 2px 8px;
     border: 1px solid var(--restart-border);
-
-    border-radius: var(--borderRadius);
-
-    color: var(--text);
+    border-radius: 6px;
 
     cursor: pointer;
 

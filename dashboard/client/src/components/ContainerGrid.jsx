@@ -83,12 +83,9 @@ function ContainerCard({ containerID, name, state, status }) {
     return (
         <li className={`Container-Card ${state}`}>
             <div className="Card-Info">
-                <div>
-                    <p className="Container-Name">Name: {name}</p>
-                    <p className="Container-Status">Status: {status}</p>
-                </div>
+                <p className="Container-Name">{name}</p>
+                <p className="Container-Status">{status}</p>
 
-                <p className="Container-State">State: {state}</p>
             </div>
 
             <div className="container-Actions">
@@ -105,6 +102,7 @@ function ContainerCard({ containerID, name, state, status }) {
                 )}
 
                 <div className="buttons">
+                    <p className={`Container-State ${state === "running" ? "on" : "off"}`}>{state}</p>
                     {state == "running" ? <StopButton /> : <StartButton />}
                     <button className="restart-button" onClick={() => buttonAction("Restart")}><span className="button-icon"><FaRedo /></span></button>
                 </div>
@@ -145,7 +143,7 @@ function ContainerGrid() {
     return (
         <section className="container-panel">
             <div className="container-panel-header">
-                <h4 className="panel-title">Containers</h4>
+                <h4 className="panel-title">CONTAINERS</h4>
                 <div className="state-counter">
                     <p className="up-counter"><span>·</span> {activeContainers} up</p>
                     <p className="down-counter"><span>·</span> {downContainers} down</p>
