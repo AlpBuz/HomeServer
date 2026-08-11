@@ -15,7 +15,6 @@ function ContainerCard({ containerID, name, state, status }) {
     const fadeTimer = useRef(null);
     const removeTimer = useRef(null);
 
-    const [currentState, setCurrentState] = useState(state)
 
     useEffect(() => {
         return () => {
@@ -119,6 +118,12 @@ function ContainerCard({ containerID, name, state, status }) {
 function ContainerGrid() {
     const {containers, error, retryPolling} = getContainers();
 
+    const activeContainers = containers.filter(c => c.state === "running").length;
+    const downContainers = containers.length - activeContainers;
+
+    // get the number of up and downed containers
+
+
     if (error) {
         return(
             <section className="container-grid-error">
@@ -139,7 +144,14 @@ function ContainerGrid() {
 
     return (
         <section className="container-panel">
-            <h2 className="panel-title">Containers</h2>
+            <div className="container-panel-header">
+                <h4 className="panel-title">Containers</h4>
+                <div className="state-counter">
+                    <p className="up-counter"><span>·</span> {activeContainers} up</p>
+                    <p className="down-counter"><span>·</span> {downContainers} down</p>
+                </div>
+            </div>
+
             <ul className="container-list">
                 {containers.map(container => {
                     return (

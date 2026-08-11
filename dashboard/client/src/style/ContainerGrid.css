@@ -4,24 +4,58 @@
 
 .container-panel {
     grid-area: containers;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--borderRadius);
-    padding: 20px;
-    box-shadow: var(--card-shadow);
-    max-height: 370px;
+    max-height: 100%;
     min-height: 0;
     display: flex;
     flex-direction: column;
+    margin: 0;
 }
 
 .panel-title {
-    padding-bottom: 12px;
-    margin-bottom: 18px;
-    border-bottom: 1px solid var(--border);
-    font-size: 1.2rem;
-    font-weight: 600;
+    margin: 0;
+    height: fit-content;
 }
+
+.container-panel-header {
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+    margin: 0;
+}
+
+.state-counter {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    height: fit-content;
+    margin: 0;
+}
+
+.up-counter {
+    margin: 0;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.down-counter {
+    margin: 0;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.up-counter span,
+.down-counter span {
+    font-size: 1.5em; /* wherever you're bumping the dot size */
+    line-height: 1;
+}
+
 
 /* ------------------------- */
 /* List */
@@ -64,7 +98,7 @@
 
     padding: 18px;
 
-    background: rgba(255,255,255,0.02);
+    background: var(--surface);
 
     border: 1px solid var(--border);
     border-left: 5px solid var(--border);
