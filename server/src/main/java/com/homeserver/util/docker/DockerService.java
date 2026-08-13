@@ -3,6 +3,7 @@ import org.springframework.stereotype.Service;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.Container;
 import com.homeserver.util.ApiResponse;
+import com.github.dockerjava.api.model.ContainerPort;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -53,8 +54,13 @@ public class DockerService {
                     info.setName(c.getNames()[0].replace("/", ""));
                 }
 
-                info.setState(c.getState());
-                info.setStatus(c.getStatus());
+                info.setState(c.getState()); // gets the state of the container
+                info.setStatus(c.getStatus()); // get the status of the container
+
+                // get the private port for the container
+                ContainerPort[] ports = c.getPorts();
+                info.setPort(Integer.toString(ports[0].getPrivatePort()));
+                
 
                 updated.add(info);
             }
