@@ -253,30 +253,23 @@
 
 .buttons {
     display: flex;
+    align-items: center;
     gap: 8px;
 }
 
 .restart-button {
-
-    display: flex;
-    align-items: center;
-
     background: var(--restart-bg);
-
     color: var(--muted);
     font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
     font-size: 10px;
     font-weight: 500;
-
-    padding: 2px 8px;
+    padding: 8px;
     border: 1px solid var(--restart-border);
-    border-radius: 6px;
-
+    border-radius: 5px;
     cursor: pointer;
-
-    transition:
-        background .2s ease,
-        border-color .2s ease,
+    transition: 
+        background .2s ease, 
+        border-color .2s ease, 
         transform .2s ease;
 }
 
@@ -292,13 +285,23 @@
 .start-button{
     background-color: var(--start-bg);
     color: var(--green);
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 10px;
+    font-weight: 500;
     border: 1px solid var(--start-border);
+    padding: 8px;
+    border-radius: 5px;
 }
 
 .stop-button{
     background-color: var(--stop-bg);
     color: var(--red);
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 10px;
+    font-weight: 500;
     border: 1px solid var(--stop-border);
+    padding: 8px;
+    border-radius: 5px;
 }
 
 

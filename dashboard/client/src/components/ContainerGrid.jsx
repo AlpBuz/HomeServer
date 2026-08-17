@@ -24,6 +24,7 @@ function ContainerCard({ containerID, name, state, status }) {
     }, []);
 
     async function buttonAction(action) {
+        console.log(`state before action: ${state}`);
         setError(false);
 
         const actions = {
@@ -66,6 +67,8 @@ function ContainerCard({ containerID, name, state, status }) {
             console.error(err);
             setError(true);
         }
+
+        console.log(`state after action: ${state}`);
     }
 
     function StartButton() {

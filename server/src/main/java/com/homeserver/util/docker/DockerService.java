@@ -59,7 +59,11 @@ public class DockerService {
 
                 // get the private port for the container
                 ContainerPort[] ports = c.getPorts();
-                info.setPort(Integer.toString(ports[0].getPrivatePort()));
+                if (ports != null && ports.length > 1 && ports[0] != null){
+                    info.setPort(Integer.toString(ports[0].getPrivatePort()));
+                }else{
+                    info.setPort(null);
+                }
                 
 
                 updated.add(info);
