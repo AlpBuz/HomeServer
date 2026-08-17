@@ -47,12 +47,32 @@ services:
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-    expose:
-      - "8096"
+    ports:
+      - "8096:8096"
     volumes:
       - ./jellyfin/config:/config
       - ./jellyfin/cache:/cache
       - ./jellyfin/media:/media
     restart: unless-stopped
+
+  dummy1:
+    image: busybox
+    command: tail -f /dev/null
+  
+  dummy2:
+    image: busybox
+    command: tail -f /dev/null
+  
+  dummy3:
+    image: busybox
+    command: tail -f /dev/null
+  
+  dummy4:
+    image: busybox
+    command: tail -f /dev/null
+  
+  dummy5:
+    image: busybox
+    command: tail -f /dev/null
 
   # more apps can be added later

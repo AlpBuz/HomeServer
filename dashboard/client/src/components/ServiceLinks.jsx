@@ -3,6 +3,9 @@ import { api } from "../api/requests";
 import { getContainers } from "../api/getContainers";
 import "../style/ServiceLinks.css";
 
+const protoccol = window.location.protocol;
+const hostName = window.location.hostname;
+
 
 function ApplicationButton({ containerID, applicationName, port }){
     // This will create the button which is unique to each application which is any application container
@@ -17,18 +20,21 @@ function ApplicationButton({ containerID, applicationName, port }){
         letter = applicationName[0];
     }
 
-    function reDirect() {
-        // function for the redirect button, sends the request to the backend to approve the redirect
-    }
-
-
+    const redirectLink = `${protoccol}//${hostName}:${port}`;
     return (
         <li>
-            <button onClick={reDirect} className="application-button">
-                <span className="">{letter}</span>
-                <p className="application-name">{applicationName}</p>
-                <p>Open &rarr;</p>
-                <p>{port}</p>
+            <button onClick={() => window.location.href=redirectLink} className="application-button">
+                <div className="application-button-info">
+                    <div className="application-button-logo">
+                        <span className="">{letter}</span>
+                    </div>
+                    <p className="application-name">{applicationName}</p>
+                    <p className="open-tag">Open &rarr;</p>
+                </div>
+
+                <div className="port-info">
+                    {port === null ? <p>No Port</p> : <p>{port}</p>}
+                </div>
             </button>
         </li>
     );

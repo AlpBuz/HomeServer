@@ -5,3 +5,34 @@
     border-radius: var(--borderRadius);
     padding: var(--padding);
 }
+
+.serviceLinks-list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.application-button {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+}
+
+.application-button-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.open-tag {
+    padding-top: 3px;
+}
+
+.port-info {
+
+}
