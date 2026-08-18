@@ -26,9 +26,9 @@ function ApplicationButton({ containerID, applicationName, port }){
     const redirectLink = `${protoccol}//${hostName}:${port}`;
     return (
         <li>
-            <button onClick={() => window.location.href=redirectLink} className="application-button">
+            <button onClick={() => window.location.href=redirectLink} className="application-button" style={{"--application-color": badgeColor}}>
                 <div className="card-top">
-                    <span style={{ color: badgeColor, background: `${badgeColor}1a` }}>{letter}</span>
+                    <span className="application-logo">{letter}</span>
                     {port === null ? <p>No Port</p> : <p>{port}</p>}
                 </div>
 

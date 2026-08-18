@@ -47,7 +47,7 @@
 }
 
 .application-button:hover {
-  border-color: var(--muted);
+  border-color: var(--application-color);
   transform: translateY(-2px);
 }
 
@@ -94,10 +94,24 @@
   white-space: nowrap;
 }
 
+.application-logo {
+  color: var(--application-color);
+  background: color-mix(in srgb, var(--application-color) 15%, transparent);
+}
+
 .open-tag {
   color: var(--muted);
   font-size: 13px;
   margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+}
+
+.application-button:hover .open-tag{
+  opacity: 1;
+  visibility: visible;
+  color: var(--application-color);
 }
 
 @media (max-width: 900px) {
