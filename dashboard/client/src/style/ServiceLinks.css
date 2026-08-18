@@ -1,38 +1,113 @@
 .ServiceLinks-panel {
     grid-area: services;
-    border: 1px solid var(--border);
-    background-color: var(--surface);
-    border-radius: var(--borderRadius);
-    padding: var(--padding);
+    max-height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    gap: 17px;
 }
 
-.serviceLinks-list{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    list-style: none;
-    padding: 0;
+.ServiceLinks-panel-title {
+    color: var(--muted);
     margin: 0;
 }
 
-.application-button {
-    background: var(--surface-2);
-    color: var(--text);
-    border: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
+.serviceLinks-list {
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  border-radius: var(--borderRadius);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  list-style: none;
+  padding: 26px;
+  margin: 0;
 }
 
-.application-button-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+.serviceLinks-list li {
+  width: 100%;
+}
+
+.application-button {
+  width: 100%;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--borderRadius);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+  min-height: 130px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.application-button:hover {
+  border-color: var(--muted);
+  transform: translateY(-2px);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.card-top span {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.card-top p {
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin: 0;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+.card-bottom {
+  margin-top: auto;
+}
+
+.application-name {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0 0 4px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .open-tag {
-    padding-top: 3px;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
 }
 
-.port-info {
+@media (max-width: 900px) {
+  .serviceLinks-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
+@media (max-width: 500px) {
+  .serviceLinks-list {
+    grid-template-columns: 1fr;
+  }
 }
