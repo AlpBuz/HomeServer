@@ -12,7 +12,18 @@ function App() {
   const date = getDate();
   const time = getTime();
   const [currentTheme, setCurrentTheme] = useState('dark-theme')
+  
+  // fetch some of the info once
+  const [info, setInfo] = useState(null);
 
+  useEffect(() => {
+    async function fetchData () {
+      const response = await api.getSystemInfo();
+      setInfo(response);
+    }
+
+    fetchData();
+  }, []);
 
   // button function for switching between light mode and dark mode
   function switchTheme () {
@@ -46,7 +57,7 @@ function App() {
         <div className='homeserver-name'>
           <h3>HomeServer</h3>
           <span>·</span>
-          <p>Ubuntu 24.04.4 LTS</p>
+          <p>{info?.osName} {info?.osVersion}</p>
         </div>
 
         <div className='date-time'>
