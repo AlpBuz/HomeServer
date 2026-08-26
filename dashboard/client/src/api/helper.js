@@ -7,7 +7,7 @@ export function getDate(date) {
 export function getTime(date) {
     let hour = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = String(date.getSeconds());
+    const seconds = String(date.getSeconds()).padStart(2, "0");
     const abbreviation = hour >= 12 ? "PM" : "AM";
 
     hour = hour % 12;
