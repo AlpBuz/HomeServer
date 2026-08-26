@@ -34,6 +34,10 @@ services:
       - "8080"
     volumes:
       - ./server/src:/backend/src
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    environment:
+      - JAVA_TOOL_OPTIONS=-Doshi.util.proc.path=/host/proc -Doshi.util.sys.path=/host/sys
 
   frontend:
     build:

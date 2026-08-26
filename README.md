@@ -73,10 +73,3 @@ docker compose -f docker-compose.prod.yml up -d
 ```
 
 The dashboard is served through Nginx once the stack is up. Update `nginx.conf` / `nginx.dev.conf` with your own domains/subdomains for each hosted service.
-
-## Roadmap
-- [ ] Finish styling and color palette across the dashboard
-- [ ] Authentication for the admin dashboard
-- [ ] Email alerts when a container goes down
-- [ ] Live clock/date in the sidebar
-- [ ] Polish hover states and container status readability

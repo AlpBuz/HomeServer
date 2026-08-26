@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import ContainerGrid from './components/ContainerGrid'
 import ServiceLinks from './components/ServiceLinks'
 import SystemOverview from './components/SystemOverview'
@@ -8,9 +8,22 @@ import './style/App.css'
 
 // This will be the admin page but for now it is just the main page.
 // Will need to add authentication soon but later.
+
+function useClock() {
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return now;
+}
+
 function App() {
-  const date = getDate();
-  const time = getTime();
+  const now = useClock();
+  const date = getDate(now);
+  const time = getTime(now);
   const [currentTheme, setCurrentTheme] = useState('dark-theme')
   
   // fetch some of the info once
@@ -50,6 +63,8 @@ function App() {
       <button className='theme-button' onClick={switchTheme}>&#x263E; Dark</button>
     )
   }
+
+  // function to update the date and clock
 
   return (
     <div className="homeserver">

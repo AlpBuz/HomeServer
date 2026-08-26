@@ -1,27 +1,19 @@
-export function getDate () {
-    const date = new Date();
-    return `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`;
+export function getDate(date) {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${month}/${day}/${date.getFullYear()}`;
 }
 
-export function getTime() {
-    const now = new Date();
+export function getTime(date) {
+    let hour = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds());
+    const abbreviation = hour >= 12 ? "PM" : "AM";
 
-    let hour = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    let abbreviation;
-
-    if (hour >= 12){
-        abbreviation = "PM";
-    }else{
-        abbreviation = "AM";
-    }
-
-
-    // Convert to 12-hour format
     hour = hour % 12;
     if (hour === 0) hour = 12;
 
-    return `${hour}:${minutes} ${abbreviation}`;
+    return `${hour}:${minutes}:${seconds} ${abbreviation}`;
 }
 
 
