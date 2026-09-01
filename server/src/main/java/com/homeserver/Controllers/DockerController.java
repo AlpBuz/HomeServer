@@ -2,6 +2,8 @@ package com.homeserver.Controllers;
 import com.homeserver.util.docker.DockerService;
 import com.homeserver.util.docker.ContainerInfo;
 import com.homeserver.util.ApiResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,27 +28,38 @@ public class DockerController {
     // }
 
     @GetMapping("/getApplications")
-    public List<ContainerInfo> getApplications() {
-        return dockerService.getApplications();
+    public ResponseEntity<List<ContainerInfo>> getApplications() {
+        return ResponseEntity.ok(dockerService.getApplications());
     }
 
     @PostMapping("/{id}/start") // starts the given container
-    public ApiResponse start(@PathVariable String id) throws Exception {
+    public ResponseEntity<ApiResponse> start(@PathVariable String id) throws Exception {
         ApiResponse response = dockerService.performAction(id, "start");
-        return response;
+        if (!response.getSuccess()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/stop") // stops the given container
-    public ApiResponse stop(@PathVariable String id) throws Exception {
+    public ResponseEntity<ApiResponse> stop(@PathVariable String id) throws Exception {
         ApiResponse response = dockerService.performAction(id, "stop");
-        return response;
+        if (!response.getSuccess()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/restart") // restarts the given container
-    public ApiResponse restart(@PathVariable String id) throws Exception {
+    public ResponseEntity<ApiResponse> restart(@PathVariable String id) throws Exception {
         ApiResponse response = dockerService.performAction(id, "restart");
-        
-        return response;
+        if (!response.getSuccess()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 }
