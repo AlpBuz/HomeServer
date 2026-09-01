@@ -4,13 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
 
 import com.homeserver.util.system.ServerService;
 import com.homeserver.util.system.ServerInfo;
 import com.homeserver.util.system.SystemMetric;
-
-import ch.qos.logback.core.util.SystemInfo;
 
 @RestController
 @RequestMapping("/api/system")
