@@ -1,6 +1,9 @@
 package com.homeserver.util.docker;
 import org.springframework.stereotype.Service;
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.exception.ConflictException;
+import com.github.dockerjava.api.exception.NotFoundException;
+import com.github.dockerjava.api.exception.NotModifiedException;
 import com.github.dockerjava.api.model.Container;
 import com.homeserver.util.ApiResponse;
 import com.github.dockerjava.api.model.ContainerPort;
@@ -8,6 +11,8 @@ import com.github.dockerjava.api.model.ContainerPort;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.ArrayList;
@@ -86,7 +91,7 @@ public class DockerService {
         return Collections.unmodifiableList(containers);
     }
 
-    public List<ContainerInfo> getApplications() {
+    public ResponseEntity<List<ContainerInfo>> getApplications() {
         // returning a list of container Info but only with the application flag on true
         List<ContainerInfo> applications = new ArrayList<>();
         for (ContainerInfo c :containers){
@@ -94,10 +99,11 @@ public class DockerService {
                 applications.add(c);
             }
         }
-
-        return applications;
+        
+        return ResponseEntity.ok(applications);
     }
 
+    // helper function
     public ContainerInfo getSingleContainer(String id) {
         for (ContainerInfo c : containers) {
             if (c.getId().equals(id)) {
@@ -107,18 +113,20 @@ public class DockerService {
         return null;
     }
 
+    //helper function
     public boolean containerExists(String id) {
         return getSingleContainer(id) != null;
     }
 
+    // helper function
     public String getContainerStatus(String id) {
         ContainerInfo container = getSingleContainer(id);
         return container == null ? "Container does not exist" : container.getStatus();
     }
 
-    public ApiResponse performAction(String id, String action) {
+    public ResponseEntity<ApiResponse> performAction(String id, String action) {
         if (!containerExists(id)) {
-            return new ApiResponse(false, action);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(false, "Container not found: " + id));
         }
 
         try {
@@ -126,21 +134,28 @@ public class DockerService {
                 case "start":
                     dockerClient.startContainerCmd(id).exec();
                     refreshContainers();
-                    return new ApiResponse(true, "Container has been started");
+                    return ResponseEntity.ok(new ApiResponse(true, "Container has been started"));
                 case "stop":
                     dockerClient.stopContainerCmd(id).exec();
                     refreshContainers();
-                    return new ApiResponse(true, "Container has been Stopped");
+                    return ResponseEntity.ok(new ApiResponse(true, "Container has been stopped"));
                 case "restart":
                     dockerClient.restartContainerCmd(id).exec();
                     refreshContainers();
-                    return new ApiResponse(true, "Container has been restarted");
+                    return ResponseEntity.ok(new ApiResponse(true, "Container has been restarted"));
                 default:
-                    return new ApiResponse(false, "Unkown action has been performed, nothing has happened");
+                    return ResponseEntity.badRequest().body(new ApiResponse(false, "Unknown action: " + action));
             }
+        } catch (NotFoundException e) {
+            // race: container disappeared between the exists-check and the actual call
+            log.warn("Container {} vanished before action '{}' could complete", id, action);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(false, "Container not found: " + id));
+        } catch (NotModifiedException | ConflictException e) {
+            log.warn("Action '{}' had no effect on container {} (state conflict)", action, id);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(false, "Container is already in the requested state or cannot transition"));
         } catch (Exception e) {
             log.error("Failed to perform action '{}' on container {}", action, id, e);
-            return new ApiResponse(false, "An error has happened");
+            return ResponseEntity.internalServerError().body(new ApiResponse(false, "An error has happened"));
         }
     }
 }

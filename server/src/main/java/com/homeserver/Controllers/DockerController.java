@@ -29,37 +29,22 @@ public class DockerController {
 
     @GetMapping("/getApplications")
     public ResponseEntity<List<ContainerInfo>> getApplications() {
-        return ResponseEntity.ok(dockerService.getApplications());
+        return dockerService.getApplications();
     }
 
     @PostMapping("/{id}/start") // starts the given container
     public ResponseEntity<ApiResponse> start(@PathVariable String id) throws Exception {
-        ApiResponse response = dockerService.performAction(id, "start");
-        if (!response.getSuccess()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
-
-        return ResponseEntity.ok(response);
+        return dockerService.performAction(id, "start");
     }
 
     @PostMapping("/{id}/stop") // stops the given container
     public ResponseEntity<ApiResponse> stop(@PathVariable String id) throws Exception {
-        ApiResponse response = dockerService.performAction(id, "stop");
-        if (!response.getSuccess()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
-    
-        return ResponseEntity.ok(response);
+        return dockerService.performAction(id, "stop");
     }
 
     @PostMapping("/{id}/restart") // restarts the given container
     public ResponseEntity<ApiResponse> restart(@PathVariable String id) throws Exception {
-        ApiResponse response = dockerService.performAction(id, "restart");
-        if (!response.getSuccess()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
-
-        return ResponseEntity.ok(response);
+        return dockerService.performAction(id, "restart");
     }
 
 }
