@@ -69,7 +69,7 @@ cd HomeServer
 docker compose -f docker-compose-dev.yml up
 
 # production
-docker compose -f docker-compose.prod.yml up -d
+docker compose up -d
 ```
 
 The dashboard is served through Nginx once the stack is up. Update `nginx.conf` / `nginx.dev.conf` with your own domains/subdomains for each hosted service.
