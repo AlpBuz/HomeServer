@@ -1,0 +1,139 @@
+.alert-settings-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.alert-settings-trigger {
+  background: var(--surface-2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+}
+
+.alert-settings-trigger:hover {
+  border-color: var(--cyan);
+  color: var(--text);
+}
+
+.alert-settings-trigger.configured::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 1px solid var(--surface);
+}
+
+.alert-settings-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--borderRadius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+  text-align: left;
+}
+
+.alert-settings-description {
+  color: var(--muted);
+  margin: 0;
+  font-size: 13px;
+}
+
+.alert-settings-status {
+  color: var(--text);
+  margin: 0;
+  font-size: 13px;
+}
+
+.alert-email-value {
+  font-family: monospace;
+  color: var(--cyan);
+}
+
+.alert-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alert-settings-form input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 13px;
+}
+
+.alert-settings-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.alert-settings-actions button {
+  flex: 1;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.alert-settings-actions button:hover:not(:disabled) {
+  border-color: var(--cyan);
+}
+
+.alert-settings-actions button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.alert-remove-button {
+  color: var(--muted);
+}
+
+.alert-settings-message {
+  margin: 0;
+  font-size: 12px;
+}
+
+.alert-settings-message.success {
+  color: var(--green);
+}
+
+.alert-settings-message.error {
+  color: #e05252;
+}
+
+@media (max-width: 500px) {
+  .alert-settings-popover {
+    right: -50px;
+    width: 230px;
+  }
+}

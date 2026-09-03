@@ -35,8 +35,12 @@ services:
     restart: unless-stopped
     expose:
       - "8080"
+    env_file:
+      - path: ./server/.env
+        required: false
     volumes:
       - ./server/src:/backend/src
+      - ./server/data:/backend/data
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
     environment:

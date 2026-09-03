@@ -1,61 +1,139 @@
 package com.homeserver.util.alert;
-import com.homeserver.util.alert.AlertInfo;
-import com.homeserver.util.docker.DockerService;
+
 import com.homeserver.util.docker.ContainerInfo;
+import com.homeserver.util.docker.DockerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class AlertService {
-    private final DockerService dockerService;
-    private HashMap<String, AlertInfo> ContainerAlerts = new HashMap<>(); // {container id: true/false}
-    private String emailAddress;
-    
 
-    public AlertService(DockerService dockerService) {
+    private static final Logger log = LoggerFactory.getLogger(AlertService.class);
+
+    private final DockerService dockerService;
+    private final JavaMailSender mailSender;
+    private final AlertEmailStore emailStore;
+    private final String fromAddress;
+    private final Duration renotifyInterval;
+
+    // container id -> alert state, so a container that's still down doesn't get re-emailed every check
+    private final Map<String, AlertInfo> containerAlerts = new HashMap<>();
+
+    public AlertService(DockerService dockerService,
+                         JavaMailSender mailSender,
+                         AlertEmailStore emailStore,
+                         @Value("${alert.mail.from:${spring.mail.username:}}") String fromAddress,
+                         @Value("${alert.renotify-minutes:30}") long renotifyMinutes) {
         this.dockerService = dockerService;
+        this.mailSender = mailSender;
+        this.emailStore = emailStore;
+        this.fromAddress = fromAddress;
+        this.renotifyInterval = Duration.ofMinutes(renotifyMinutes);
     }
 
-    // method to check on the status of the containers and return the ids of any containers that are down
+    // Runs on its own cadence, slightly slower than DockerService's 5s container refresh
+    // so it's always checking against a fresh list.
+    @Scheduled(fixedRate = 30000)
     public void checkContainers() {
-        // any containers that are currently down will be inserted into a list.
-        // this list will be used with alertMessage to send me a message of downed containers
-        // also for containers that are running check this info with the stored info to see if containers that were
-        // previsoly down should be 
-        
-        // get the list of containers currently
         List<ContainerInfo> containers = dockerService.getContainers();
-        List<String> downContainers = new ArrayList<String>();
-        // loop through each container and check the status of each container, if one is down store id inside the return list
-        for (ContainerInfo c : containers){
-            if (!"running".equalsIgnoreCase(c.getState())){
-                // save into the list else ignore
+        List<String> downContainers = new ArrayList<>();
+
+        for (ContainerInfo c : containers) {
+            if (!"running".equalsIgnoreCase(c.getState())) {
                 downContainers.add(c.getId());
             }
         }
 
-        // if there are any containers that are down send an alert message
         alertMessage(downContainers);
     }
 
     public boolean checkEmail() {
-        if (emailAddress != null){
-            return true;
-        }
-
-        return false;
+        return emailStore.isSet();
     }
 
-    // method to send a response to me about a down container
-    public void alertMessage(List<String> downContainers) {
-        // email me of downed containers unless there is no email saved
+    // Safe to expose over the API - hides all but the first character of the local part.
+    public String getMaskedEmail() {
+        return AlertEmailStore.mask(emailStore.get());
+    }
 
-        // first check when was the last time a container was downed so I dont constanly get notified of downed containers
+    // Emails the owner about any newly-down (or still-down past the cooldown) containers,
+    // and sends a recovery notice for anything that was down and is now running again.
+    public void alertMessage(List<String> downContainers) {
+        if (!checkEmail()) {
+            return;
+        }
+
+        Set<String> stillDown = new HashSet<>(downContainers);
+
+        for (String id : downContainers) {
+            ContainerInfo container = dockerService.getSingleContainer(id);
+            if (container == null) {
+                continue;
+            }
+
+            AlertInfo info = containerAlerts.computeIfAbsent(id, key -> new AlertInfo(id, container.getName()));
+            info.setContainerName(container.getName());
+
+            boolean cooldownElapsed = info.getLastAlertSent() == null
+                    || Duration.between(info.getLastAlertSent(), Instant.now()).compareTo(renotifyInterval) >= 0;
+
+            if (!info.isDown() || cooldownElapsed) {
+                sendMail("[HomeServer] " + container.getName() + " is down",
+                        "Container '" + container.getName() + "' is currently " + container.getState() + ".\n"
+                                + "Status: " + container.getStatus());
+                info.setLastAlertSent(Instant.now());
+            }
+            info.setDown(true);
+        }
+
+        // anything we were tracking as down that isn't in this round's downContainers has recovered
+        for (AlertInfo info : containerAlerts.values()) {
+            if (info.isDown() && !stillDown.contains(info.getContainerId())) {
+                sendMail("[HomeServer] " + info.getContainerName() + " is back up",
+                        "Container '" + info.getContainerName() + "' is running again.");
+                info.setDown(false);
+                info.setLastAlertSent(null);
+            }
+        }
+    }
+
+    private void sendMail(String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(emailStore.get());
+        if (fromAddress != null && !fromAddress.isBlank()) {
+            message.setFrom(fromAddress);
+        }
+        message.setSubject(subject);
+        message.setText(body);
+
+        try {
+            mailSender.send(message);
+        } catch (MailException e) {
+            // Don't let a bad SMTP config or a transient send failure take down the scheduled check.
+            log.error("Failed to send alert email", e);
+        }
     }
 
     public void updateEmail(String email) {
-        this.emailAddress = email;
+        emailStore.save(email);
+    }
+
+    public void clearEmail() {
+        emailStore.clear();
     }
 }

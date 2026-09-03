@@ -42,4 +42,7 @@ export const api = {
   stopContainer: (id) => request(`/docker/${id}/stop`, { method: "POST" }),
   restartContainer: (id) => request(`/docker/${id}/restart`, { method: "POST" }),
   getRedirect: (id) => request(`/redirect/${id}`),
+  getAlertEmail: () => request("/alert/email", { method: "GET" }),
+  setAlertEmail: (email) => request("/alert/email", { method: "POST", body: JSON.stringify({ email }) }),
+  clearAlertEmail: () => request("/alert/email", { method: "DELETE" }),
 };

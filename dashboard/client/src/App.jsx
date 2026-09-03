@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import ContainerGrid from './components/ContainerGrid'
 import ServiceLinks from './components/ServiceLinks'
 import SystemOverview from './components/SystemOverview'
+import AlertSettings from './components/AlertSettings'
 import { api, pollingFunction } from "./api/requests";
 import { getDate, getTime } from "./api/helper"
 import './style/App.css'
@@ -76,6 +77,7 @@ function App() {
         </div>
 
         <div className='date-time'>
+          <AlertSettings />
           {currentTheme == 'dark-theme' ? <DarkButton /> : <LightButton />}
           <p className='p-time'>{time}</p>
           <p className='p-date'>{date}</p>
